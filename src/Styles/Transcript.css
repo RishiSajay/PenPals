@@ -1,0 +1,19 @@
+.chatBox {
+    width: 80%;
+    height: 30%;
+    border-style: solid;
+    border-color: black;
+}
+
+/* .chatButton {
+    padding-left: 2%;
+    padding-right: 2%;
+} */
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-15 {
+    width: 15% !important;
+}
