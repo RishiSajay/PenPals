@@ -9,6 +9,14 @@
     padding-left: 2%;
     padding-right: 2%;
 } */
+.accordion {
+    border-style: solid;
+    border-color: grey;
+}
+
+.accordion-button {
+    padding: 0 !important;
+}
 
 .w-10 {
     width: 10% !important;
