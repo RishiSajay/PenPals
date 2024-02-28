@@ -1,6 +1,4 @@
 .chatBox {
-    width: 80%;
-    height: 30%;
     border-style: solid;
     border-color: black;
 }
@@ -9,6 +7,9 @@
     padding-left: 2%;
     padding-right: 2%;
 } */
+.btn-collapse {
+    padding: 2%;
+}
 .accordion {
     border-style: solid;
     border-color: grey;
