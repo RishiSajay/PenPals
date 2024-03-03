@@ -3,15 +3,17 @@ import "../Styles/Transcript.css";
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
+import Chat from './Chat';
 
 function Transcript() {
   // State to manage the visibility of the text div
-  const [isVisible, setIsVisible] = useState(true);
-
+  const [isVisible, setIsVisible] = useState(true)
   // Function to toggle the visibility state
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
+  const botArr = ["hello world", "please work"];
 
   return (
     <div className="container chatBox rounded-2 position-absolute bottom-0 start-50 translate-middle">
@@ -19,7 +21,6 @@ function Transcript() {
         <div
           className="col"
         >
-
         </div>
         <div
           className="col col-lg-2"
@@ -50,7 +51,7 @@ function Transcript() {
       </div>
       <Collapse in={isVisible}>
         <div id="collapse-chat-text">
-          Baguette
+          <Chat botChat={botArr} userChat={botArr}></Chat>
         </div>
       </Collapse>
     </div>
