@@ -3,7 +3,7 @@ import Transcript from "./Components/Transcript";
 function App() {
   return (
     <>
-      <div>
+      <div className="px-2">
         <Transcript></Transcript>
       </div>
     </>

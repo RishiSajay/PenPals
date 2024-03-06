@@ -1,28 +1,41 @@
+import Definition from './Definition';
+import React, { useState } from "react";
+
 interface chatProps {
     botChat: string[];
     userChat: string[];
 }
 
 function Chat(chats : chatProps) {
+    const [showCard, setShowCard] = useState("");
+
 
     const handleClick = (word : string) => {
-        console.log(`${word} clicked`);
+        setShowCard(word);
     }
     return(
         <div>
-        {chats.botChat.map((sentence, sentenceIndex) => (
-          <div key={sentenceIndex}>
-            {sentence.split(" ").map((word, wordIndex) => (
-              <span key={wordIndex}>
-                {wordIndex > 0 && " "}
-                <span onClick={() => handleClick(word)} style={{ cursor: 'pointer' }}>
-                  {word}
+          {chats.botChat.map((sentence, sentenceIndex) => (
+            <div key={sentenceIndex}>
+              {sentence.split(" ").map((word, wordIndex) => (
+                <span key={wordIndex}>
+                  {wordIndex > 0 && " "}
+                  <span onClick={() => handleClick(word)} style={{ cursor: 'pointer' }}>
+                    {word}
+                  </span>
                 </span>
-              </span>
-            ))}
+              ))}
+            </div>
+          ))}
+          <div className="position-fixed top-0 end-0">
+            {showCard != "" &&
+              <Definition word={showCard}>
+                  
+              </Definition>
+            }
+            
           </div>
-        ))}
-      </div>
+        </div>
     );
 }
 
