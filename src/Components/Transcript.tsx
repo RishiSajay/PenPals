@@ -13,7 +13,7 @@ function Transcript() {
     setIsVisible(!isVisible);
   };
 
-  const botArr = ["hello world", "please work"];
+  const botArr = ["Bonjour le monde", "please work"];
 
   return (
     <>
