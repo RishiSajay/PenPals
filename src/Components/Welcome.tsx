@@ -4,7 +4,9 @@ const Welcome = () => {
   return (
     <>
       <div>Welcome To PenPals!</div>
-      <a href={"/home"}>Click Me!</a>
+      <a href={"/login"}>Login</a>
+      <br></br>
+      <a href={"/home"}>Sign Up</a>
     </>
   );
 };
