@@ -6,7 +6,7 @@ const Welcome = () => {
       <div>Welcome To PenPals!</div>
       <a href={"/login"}>Login</a>
       <br></br>
-      <a href={"/home"}>Sign Up</a>
+      <a href={"/signUp"}>Sign Up</a>
     </>
   );
 };
