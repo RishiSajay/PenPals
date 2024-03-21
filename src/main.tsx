@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Welcome from "./Components/Welcome.tsx";
-import Home from "./Components/Home.tsx";
+import Home from "./Components/Home/Home.tsx";
 import ErrorPage from "./Components/ErrorPage.tsx";
 import Login from "./Components/Login.tsx";
 import SignUp from "./Components/SignUp.tsx";
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     path: "/signUp",
     //element: <App></App>,
     element: <SignUp></SignUp>,
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
