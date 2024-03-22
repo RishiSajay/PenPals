@@ -4,6 +4,13 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Chat from './Chat';
+import Speech from './Speech';
+import 'regenerator-runtime/runtime'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import micImage from "../assets/microphone.png"
+
+
+let language = 'fr-FR';
 
 function Transcript() {
   // State to manage the visibility of the text div
@@ -12,6 +19,17 @@ function Transcript() {
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
+  const {
+    transcript,
+    listening,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+  const startListening = () => SpeechRecognition.startListening({ continuous: true, language: language});
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   const botArr = ["Bonjour le monde", "please work"];
 
@@ -24,6 +42,19 @@ function Transcript() {
             <div
               className="col"
             >
+            </div>
+            <div
+              className="col col-lg-2"
+            >
+              <div className="btn-collapse">
+                <Button
+                  onTouchStart={startListening}
+                  onMouseDown={startListening}
+                  onTouchEnd={SpeechRecognition.stopListening}
+                  onMouseUp={SpeechRecognition.stopListening}
+                ><img src={micImage} width={60}></img></Button>
+                <p>Microphone: {listening ? 'on' : 'off'}</p>
+              </div>
             </div>
             <div
               className="col col-lg-2"
@@ -54,7 +85,7 @@ function Transcript() {
           </div>
           <Collapse in={isVisible}>
             <div id="collapse-chat-text">
-              <Chat botChat={botArr} userChat={botArr}></Chat>
+              <Chat botChat={[transcript]} userChat={[transcript]}></Chat>
             </div>
           </Collapse>
         </div>
