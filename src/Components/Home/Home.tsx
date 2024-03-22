@@ -1,5 +1,6 @@
 import React from "react";
 import "../../Styles/Home.css";
+import PracticeCard from "./PracticeCard";
 
 const Home = () => {
   return (
@@ -7,9 +8,12 @@ const Home = () => {
       <div className="container">
         <p className="fs-1 fw-bold text-primary text-center">Home</p>
         <div className="d-flex justify-content-center">
-          <a className="btn btn-primary" href={"/app"}>
-            Practice
-          </a>
+          <PracticeCard
+            topic="Food"
+            nextPath="/app"
+            progress={45}
+            lastVisited="2 days ago"
+          ></PracticeCard>
         </div>
       </div>
     </>
