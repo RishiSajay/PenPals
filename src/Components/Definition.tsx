@@ -11,19 +11,20 @@ interface definitionProps {
 
 /* IMPORTANT: Start of comment for credential issue
 
-const {VITE_REACT_APP_CREDENTIALS} = import.meta.env;
+const { VITE_REACT_APP_CREDENTIALS } = import.meta.env;
 let CREDENTIALS;
 if (VITE_REACT_APP_CREDENTIALS) {
-    CREDENTIALS = JSON.parse(VITE_REACT_APP_CREDENTIALS);
+  CREDENTIALS = JSON.parse(VITE_REACT_APP_CREDENTIALS);
 }
 
 const API_KEY = CREDENTIALS.private_key;
-const API_URL = 'https://translation.googleapis.com/language/translate/v2';
+const API_URL = "https://translation.googleapis.com/language/translate/v2";
 
 let frenchWord;
 translateText();
 
 End of comment */
+
 function Definition(props: definitionProps) {
   // const translateText = async (text : string) => {
   //     fetch(`${API_URL}?` + new URLSearchParams({
