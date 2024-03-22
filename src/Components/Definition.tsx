@@ -3,7 +3,6 @@ import Card from "react-bootstrap/Card";
 import dotenv from "dotenv";
 import Translate from "@google-cloud/translate";
 import axios from "axios";
-import translateText from "../Scripts/GoogleTranslate";
 
 interface definitionProps {
   word: string;
