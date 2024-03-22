@@ -14,7 +14,7 @@ const Home = () => {
             progress={45}
             lastVisited="2 days ago"
           >
-            Learn how to ask about food recomendations, restaurant review, and
+            Learn how to ask about food recomendations, restaurant reviews, and
             more!
           </PracticeCard>
         </div>
