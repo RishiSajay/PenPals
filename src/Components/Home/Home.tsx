@@ -9,11 +9,14 @@ const Home = () => {
         <p className="fs-1 fw-bold text-primary text-center">Home</p>
         <div className="d-flex justify-content-center">
           <PracticeCard
-            topic="Food"
+            topic="Cuisine"
             nextPath="/app"
             progress={45}
             lastVisited="2 days ago"
-          ></PracticeCard>
+          >
+            Learn how to ask about food recomendations, restaurant review, and
+            more!
+          </PracticeCard>
         </div>
       </div>
     </>
