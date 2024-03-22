@@ -19,7 +19,7 @@ const PracticeCard = ({
     <>
       <div className="card w-75 text-start">
         <div className="card-header">
-          <ProgressBar animated now={progress} />
+          <ProgressBar animated now={progress} label={progress + "%"} />
         </div>
         <div className="card-body">
           <h5 className="card-title">{topic}</h5>
