@@ -35,7 +35,13 @@ function Chat(chats: chatProps) {
   }
   const [showCard, setShowCard] = useState("");
   const [definition, setDefinition] = useState("");
-
+  const handleMouseUp = () => {
+    const selection = window.getSelection()?.toString();
+    if (selection) {
+      setShowCard(selection);
+      getDefinition(selection);
+    }
+  }
   const handleClick = (word: string) => {
     setShowCard(word);
     getDefinition(word);
@@ -48,7 +54,7 @@ function Chat(chats: chatProps) {
             <span key={wordIndex}>
               {wordIndex > 0 && " "}
               <span
-                onClick={() => handleClick(word)}
+                onClick={() => handleMouseUp()}
                 className="word"
                 title={word}
               >
