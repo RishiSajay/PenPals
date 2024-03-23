@@ -9,6 +9,7 @@ import Login from "./Components/Login.tsx";
 import SignUp from "./Components/SignUp.tsx";
 import "bootstrap/dist/css/bootstrap.css";
 import Loading from "./Components/Loading.tsx"
+import Goals from "./Components/Goals.tsx"
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: <Loading></Loading>,
-  }
+  },
+  {
+    path: "/goals",
+    element: <Goals></Goals>
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
