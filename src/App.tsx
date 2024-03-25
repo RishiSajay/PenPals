@@ -1,18 +1,16 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import microphoneImg from './assets/microphone.png';
 
 function App() {
   const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const dfMessenger = useRef(null); // Reference to the df-messenger element
-
 
   useEffect(() => {
+    // Dynamically load the Dialogflow Messenger
     const script = document.createElement('script');
     script.src = "https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1";
     script.async = true;
-    document.head.appendChild(script);
+    document.body.appendChild(script);
 
     script.onload = () => {
       const messenger = document.createElement('df-messenger');
@@ -24,7 +22,8 @@ function App() {
     };
 
     return () => {
-      document.head.removeChild(script);
+      // Cleanup: Remove the script and messenger elements
+      document.body.removeChild(script);
       const messenger = document.querySelector('df-messenger');
       if (messenger) {
         document.body.removeChild(messenger);
@@ -33,7 +32,6 @@ function App() {
   }, []);
 
   const runSpeechRecognition = useCallback(() => {
-    // Check for browser support
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       console.error("This browser does not support Web Speech API");
@@ -43,7 +41,6 @@ function App() {
     const recognition = new SpeechRecognition();
     recognition.lang = 'fr';
     recognition.start();
-
     setIsListening(true);
 
     recognition.onstart = () => {
@@ -57,21 +54,38 @@ function App() {
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      const confidence = event.results[0][0].confidence;
-      setTranscript(transcript);
-      console.log(`Transcript: ${transcript}, Confidence: ${confidence*100}%`);
-      // Here you might want to send the transcript to Dialogflow or perform another action
-      if (dfMessenger.current) {
-        try {
-          const inputField = dfMessenger.current.shadowRoot.querySelector('df-messenger-chat').shadowRoot.querySelector('df-messenger-user-input').shadowRoot.querySelector('input[type="text"]');
-          inputField.value = transcript;
-          const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-          inputField.dispatchEvent(submitEvent);
-        } catch (error) {
-          console.error("Error sending transcript to Dialogflow Messenger:", error);
+      console.log(`Transcript: ${transcript}`);
+      
+      try {
+        // Attempt to access the deeply nested input within the shadow DOMs
+        const dfMessenger = document.querySelector('df-messenger');
+        if (!dfMessenger || !dfMessenger.shadowRoot) {
+          throw new Error('df-messenger or its shadowRoot is not accessible');
         }
+    
+        const dfMessengerChat = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
+        if (!dfMessengerChat || !dfMessengerChat.shadowRoot) {
+          throw new Error('df-messenger-chat or its shadowRoot is not accessible');
+        }
+    
+        const userInput = dfMessengerChat.shadowRoot.querySelector('df-messenger-user-input');
+        if (!userInput || !userInput.shadowRoot) {
+          throw new Error('df-messenger-user-input or its shadowRoot is not accessible');
+        }
+    
+        const input = userInput.shadowRoot.querySelector('input[type="text"]') as HTMLInputElement;
+        if (!input) {
+          throw new Error('Input field is not found');
+        }
+    
+        input.value = transcript; // Set recognized text to input
+        input.dispatchEvent(new Event('input', {bubbles: true})); // Ensure Vue.js or similar frameworks detect the change
+        input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); // Simulate the Enter key press
+      } catch (error) {
+        console.error("Error sending transcript to Dialogflow Messenger:", error);
       }
     };
+    
 
     recognition.onerror = (event) => {
       console.error("Speech recognition error", event.error);
@@ -86,7 +100,6 @@ function App() {
           <img src={microphoneImg} alt="Microphone" />
         </button>
         {isListening ? <p>I am listening! Please speak.</p> : <p>Click the button to start talking!</p>}
-        {transcript && <p>Transcript: {transcript}</p>}
       </div>
     </div>
   );
