@@ -1,9 +1,67 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import microphoneImg from './assets/microphone.png';
+import axios from 'axios';
+import Definition from "./Components/Definition";
+
 
 function App() {
   const [isListening, setIsListening] = useState(false);
+  const [showCard, setShowCard] = useState("");
+  const [definition, setDefinition] = useState("");
+
+  const {VITE_REACT_APP_KEY} = import.meta.env;
+
+  const getDefinition = async (word: string) => {
+      const options = {
+          method: 'GET',
+          url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
+          params: {
+              langpair: 'fr|en',
+              q: `${word}`,
+              mt: '1',
+              onlyprivate: '0'
+          },
+          headers: {
+              'X-RapidAPI-Key': `${VITE_REACT_APP_KEY}`,
+              'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com'
+          }
+          };
+      try {
+          const response = await axios.request(options);
+          setDefinition(response.data.matches[0].translation);
+      } catch (error) {
+          console.error(error);
+      }
+  }
+
+  useEffect(() => {
+    const handleMouseUp = () => {
+      const selection = window.getSelection()?.toString().trim();
+      if (selection) {
+        setShowCard(selection);
+        getDefinition(selection);
+      }
+    };
+
+    // Attach the event listener to the document
+    document.addEventListener('mouseup', handleMouseUp);
+
+    // Cleanup function to remove the event listener
+    return () => document.removeEventListener('mouseup', handleMouseUp);
+  }, []); // Ensure useEffect runs only once at mount
+  
+  // const handleMouseUp = () => {
+  //   const selection = window.getSelection()?.toString();
+  //   if (selection) {
+  //     setShowCard(selection);
+  //     getDefinition(selection);
+  //   }
+  // }
+  // const handleClick = (word: string) => {
+  //   setShowCard(word);
+  //   getDefinition(word);
+  // };
 
   useEffect(() => {
     // Dynamically load the Dialogflow Messenger
@@ -11,6 +69,7 @@ function App() {
     script.src = "https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1";
     script.async = true;
     document.body.appendChild(script);
+    
 
     script.onload = () => {
       const messenger = document.createElement('df-messenger');
@@ -78,9 +137,9 @@ function App() {
           throw new Error('Input field is not found');
         }
     
-        input.value = transcript; // Set recognized text to input
-        input.dispatchEvent(new Event('input', {bubbles: true})); // Ensure Vue.js or similar frameworks detect the change
-        input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); // Simulate the Enter key press
+        input.value = transcript; 
+        input.dispatchEvent(new Event('input', {bubbles: true}));
+        input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); 
       } catch (error) {
         console.error("Error sending transcript to Dialogflow Messenger:", error);
       }
@@ -100,6 +159,9 @@ function App() {
           <img src={microphoneImg} alt="Microphone" />
         </button>
         {isListening ? <p>I am listening! Please speak.</p> : <p>Click the button to start talking!</p>}
+      </div>
+      <div className="position-fixed top-0 end-0">
+        {showCard != "" && <Definition word={showCard} trans={definition}></Definition>}
       </div>
     </div>
   );
