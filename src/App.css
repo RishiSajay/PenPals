@@ -1,0 +1,19 @@
+/* Style and position the microphone button */
+.mic-container {
+    position: fixed;
+    bottom: 20px; /* Adjust based on your preference */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  
+  .mic-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .mic-button img {
+    width: 50px; /* Adjust size as needed */
+  }
+  
