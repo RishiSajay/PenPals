@@ -1,19 +1,34 @@
 /* Style and position the microphone button */
 .mic-container {
-    position: fixed;
-    bottom: 20px; /* Adjust based on your preference */
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-  
-  .mic-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .mic-button img {
-    width: 50px; /* Adjust size as needed */
-  }
-  
+  position: fixed;
+  bottom: 20px; /* Adjust based on your preference */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.mic-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mic-button img {
+  width: 50px; /* Adjust size as needed */
+}
+
+/* .goals-container { */
+    /* position: fixed; Or absolute, if you want it to move with page scrolling */
+    /* top: 0; */
+    /* left: 0; */
+    /* width: auto; Adjust based on your content */
+    /* z-index: 1000; Ensure it sits above the background image */
+  /* } */
+
+/* Set the background image for the App container */
+.App {
+  background-image: url('./assets/Emma Static.png'); /* Adjust the path as necessary */
+  background-size: cover; /* Cover the entire page */
+  background-position: center; /* Center the background image */
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+}

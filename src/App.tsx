@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import microphoneImg from './assets/microphone.png';
+import EmmaStatic from './assets/Emma Static.png';
 import axios from 'axios';
 import Definition from "./Components/Definition";
+import { ProgressBar } from "react-bootstrap";
 
 
 function App() {
@@ -50,18 +52,6 @@ function App() {
     // Cleanup function to remove the event listener
     return () => document.removeEventListener('mouseup', handleMouseUp);
   }, []); // Ensure useEffect runs only once at mount
-  
-  // const handleMouseUp = () => {
-  //   const selection = window.getSelection()?.toString();
-  //   if (selection) {
-  //     setShowCard(selection);
-  //     getDefinition(selection);
-  //   }
-  // }
-  // const handleClick = (word: string) => {
-  //   setShowCard(word);
-  //   getDefinition(word);
-  // };
 
   useEffect(() => {
     // Dynamically load the Dialogflow Messenger
@@ -153,7 +143,28 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{ 
+      backgroundImage: `url(${EmmaStatic})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      position: 'relative', // Ensure the .App container is positioned relatively
+    }}>
+      <div className="goals-container"> 
+        <div className="card w-25 mt-5 border border-dark rounded">
+          <div className="card-body">
+            <h3 className="text-center">Goals</h3>
+            <ProgressBar variant="info" now={20} />
+            Cultural References
+            <ProgressBar variant="info" now={70} />
+            Places
+            <ProgressBar variant="info" now={10} />
+            Talking about Food
+            <ProgressBar variant="info" now={40} />
+            Artwork
+          </div>
+        </div>
+      </div>
       <div className="mic-container">
         <button className="mic-button" onClick={runSpeechRecognition}>
           <img src={microphoneImg} alt="Microphone" />
@@ -164,6 +175,7 @@ function App() {
         {showCard != "" && <Definition word={showCard} trans={definition}></Definition>}
       </div>
     </div>
+    
   );
 }
 
