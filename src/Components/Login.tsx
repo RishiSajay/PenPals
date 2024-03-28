@@ -7,12 +7,16 @@ const Login = () => {
   const[password, setPassword] = useState('');
 
   function handleSubmit(event: { preventDefault: () => void; }) {
-    console.log(email);
-    console.log(password);
     event.preventDefault();
     axios.post('http://localhost:3000/login', {email, password})
-    .then(res => console.log(res))
+    .then(res => checkRes(res.data))
     .catch(err => console.log(err));
+  }
+
+  function checkRes(res: string) {
+    if(res === 'LoginSuccess') {
+      window.location.href = '/home'
+    }
   }
 
   return (
