@@ -17,6 +17,9 @@ const Login = () => {
     if(res === 'LoginSuccess') {
       window.location.href = '/home'
     }
+    else {
+      // tell them they have the wrong combo
+    }
   }
 
   return (

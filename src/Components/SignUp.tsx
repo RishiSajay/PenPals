@@ -1,31 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios';
 
-const Login = () => {
+const SignUp = () => {
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
+  const[password2, setPassword2] = useState('');
+
+
+  function handleSubmit(event: { preventDefault: () => void; }) {
+    event.preventDefault();
+    if(password != password2) {
+      // tell them their passwords are different
+    }
+    else {
+      axios.post('http://localhost:3000/signUp', {email, password})
+      .then(res => checkRes(res.data))
+      .catch(err => console.log(err));
+    }
+  }
+
+  function checkRes(res: string) {
+    console.log(res)
+    if(res === 'SignUpSuccess') {
+      window.location.href = '/home'
+    }
+    else if(res === "SignUpFail") {
+      // tell them they already have an account
+    }
+  }
+
   return (
     <>
-      {/* <body>
-        <input type="text" id="email" placeholder="Email" />
-        <br></br>
-        <input type="password" id="password" placeholder="Password" />
-        <br></br>
-        <input type="password" id="passwordC" placeholder="Confirm Password" />
-        <br></br>
-        <a href={"/home"}>SignUp</a>
-        <br></br>
-        <a href={"/"}>Back</a>
-      </body> */}
+    <form onSubmit={handleSubmit}>
       <div className="d-flex justify-content-center">
         <div className="card card w-25 mt-5 border border-primary rounded">
           <div className="card-body">
-            <form>
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email Address</label>
                 <input
                   type="email"
                   className="form-control"
-                  id="exampleInputEmail1"
+                  id="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
+                  onChange={e=>setEmail(e.target.value)}
                 ></input>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else
@@ -36,8 +55,9 @@ const Login = () => {
                 <input
                   type="password"
                   className="form-control"
-                  id="exampleInputPassword1"
+                  id="password1"
                   placeholder="Password"
+                  onChange={e=>setPassword(e.target.value)}
                 ></input>
               </div>
               <div className="form-group mt-2">
@@ -45,24 +65,20 @@ const Login = () => {
                 <input
                   type="password"
                   className="form-control"
-                  id="exampleInputPassword1"
+                  id="password2"
                   placeholder="Confirm Password"
+                  onChange={e=>setPassword2(e.target.value)}
                 ></input>
               </div>
               <div className="d-flex mt-2">
-                <a href="/home" className="btn btn-primary me-3">
-                  Sign Up
-                </a>
-                <a href="/" className="btn btn-primary">
-                  Back
-                </a>
+              <button>Sign Up</button>
               </div>
-            </form>
           </div>
         </div>
       </div>
+      </form>
     </>
   );
 };
 
-export default Login;
+export default SignUp;
