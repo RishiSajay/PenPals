@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import axios from 'axios';
+import axios from 'axios'
+var currUser = ""
+export const environment = {
+  currUser
+};
 
 const Login = () => {
   const[email, setEmail] = useState('');
@@ -14,7 +18,9 @@ const Login = () => {
   }
 
   function checkRes(res: string) {
+    console.log(res)
     if(res === 'LoginSuccess') {
+      currUser = email;
       window.location.href = '/home'
     }
     else {
