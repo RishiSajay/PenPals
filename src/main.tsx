@@ -9,6 +9,7 @@ import Login from "./Components/Login.tsx";
 import SignUp from "./Components/SignUp.tsx";
 import "bootstrap/dist/css/bootstrap.css";
 import Loading from "./Components/Loading.tsx"
+import GoalSetup from "./Components/GoalSetup.tsx"
 import Goals from "./Components/Goals.tsx"
 
 const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: <Loading></Loading>,
+  },
+  {
+    path: "/goalSetup",
+    element: <GoalSetup></GoalSetup>
   },
   {
     path: "/goals",

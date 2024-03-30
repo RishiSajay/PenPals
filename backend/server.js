@@ -20,6 +20,7 @@ app.post('/login', (req, res) => {
     db.query(sql, [req.body.email,req.body.password], (err, data)=> {
         if (err) throw err;
         if(data.length > 0) {
+            //return data.XP, data.XPD
             return res.json("LoginSuccess")
         }
         else {
@@ -45,6 +46,28 @@ app.post('/signUp', (req, res) => {
                     return res.json("SignUpSuccess")
                 }
             })
+        }
+    })
+})
+
+app.post('/goals', (req, res) => {
+    const sql = "SELECT * FROM login WHERE email = ?";
+
+    db.query(sql, [req.body.email], (err, data)=> {
+        if (err) throw err;
+        if(data.length > 0) {
+            return data
+        }
+    })
+})
+
+app.post('/goalSetup', (req, res) => {
+    const sql = "UPDATE login SET `XP goal` = ?, `XP date` = ?, `WS goal` = ?, `WS date` = ?, `WT goal` = ?, `WT date` = ?, `H goal` = ?, `H date` = ? WHERE email = ?";
+
+    db.query(sql, [req.body.XP, req.body.XPD, req.body.WS, req.body.WSD, req.body.WT, req.body.WTD, req.body.H, req.body.HD, req.body.user], (err, data)=> {
+        if (err) throw err;
+        else {
+            return res.json("Success")
         }
     })
 })

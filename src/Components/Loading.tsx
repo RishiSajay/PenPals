@@ -7,7 +7,7 @@ const Loading = () => {
             <div className="card card w-25 mt-5 border border-dark rounded text-center">
             <div className="card-body">
                 <h3>Loading</h3>
-                Incroyable! Your accuracy went up by 10% last week.
+                Incroyable! You're halfway to your spoken words goal.
             </div>
             </div>
         </div>

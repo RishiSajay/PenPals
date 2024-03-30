@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
+import GoalSetup from "./GoalSetup";
+import Goals from "./Goals";
+
+let currUser:string = ""
 
 const SignUp = () => {
   const[email, setEmail] = useState('');
@@ -14,7 +18,7 @@ const SignUp = () => {
       // tell them their passwords are different
     }
     else {
-      axios.post('http://localhost:3000/signUp', {email, password})
+      axios.post('http://localhost:3000/signup', {email, password})
       .then(res => checkRes(res.data))
       .catch(err => console.log(err));
     }
@@ -23,7 +27,8 @@ const SignUp = () => {
   function checkRes(res: string) {
     console.log(res)
     if(res === 'SignUpSuccess') {
-      window.location.href = '/home'
+      currUser = email
+      window.location.href = '/goalsetup'
     }
     else if(res === "SignUpFail") {
       // tell them they already have an account
