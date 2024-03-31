@@ -5,18 +5,18 @@ import axios from "axios";
 
 const GoalSetup = () => {
   const user = "1@gmail.com"
-  const[XP, setXP] = useState('');
+  const[XPG, setXPG] = useState('');
   const[XPD, setXPD] = useState('');
-  const[WS, setWS] = useState('');
+  const[WSG, setWSG] = useState('');
   const[WSD, setWSD] = useState('');
-  const[WT, setWT] = useState('');
+  const[WTG, setWTG] = useState('');
   const[WTD, setWTD] = useState('');
-  const[H, setH] = useState('');
+  const[HG, setHG] = useState('');
   const[HD, setHD] = useState('');
 
   function initialGoals(event: { preventDefault: () => void; }) { //setup for the first time
     event.preventDefault();
-    axios.post('http://localhost:3000/goalsetup', {XP, XPD, WS, WSD, WT, WTD, H, HD, user})
+    axios.post('http://localhost:3000/goalsetup', {XPG, XPD, WSG, WSD, WTG, WTD, HG, HD, user})
     .then(res => checkRes(res.data))
     .catch(err => console.log(err));
   }
@@ -42,7 +42,7 @@ const GoalSetup = () => {
                   className="form-control"
                   id="XP"
                   placeholder="enter your XP goal"
-                  onChange={e=>setXP(e.target.value)}
+                  onChange={e=>setXPG(e.target.value)}
                 ></input>
                 <input
                   type="date"
@@ -59,7 +59,7 @@ const GoalSetup = () => {
                   className="form-control"
                   id="WS"
                   placeholder="enter your words spoken goal"
-                  onChange={e=>setWS(e.target.value)}
+                  onChange={e=>setWSG(e.target.value)}
                 ></input>
                 <input
                   type="date"
@@ -76,7 +76,7 @@ const GoalSetup = () => {
                   className="form-control"
                   id="WT"
                   placeholder="enter your words typed goal"
-                  onChange={e=>setWT(e.target.value)}
+                  onChange={e=>setWTG(e.target.value)}
                 ></input>
                 <input
                   type="date"
@@ -93,7 +93,7 @@ const GoalSetup = () => {
                   className="form-control"
                   id="H"
                   placeholder="enter your highlighting goal"
-                  onChange={e=>setH(e.target.value)}
+                  onChange={e=>setHG(e.target.value)}
                 ></input>
                 <input
                   type="date"
