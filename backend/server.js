@@ -64,7 +64,7 @@ app.post('/goals', (req, res) => {
 })
 
 app.post('/goalSetup', (req, res) => {
-    const sql = "UPDATE login SET `XPG` = ?, `XPD` = ?, `WSG` = ?, `WSD` = ?, `WTG` = ?, `WTD` = ?, `HG` = ?, `HD` = ? WHERE email = ?";
+    const sql = "UPDATE login SET `XPG` = ?, `XPD` = ?, `WSG` = ?, `WSD` = ?, `WTG` = ?, `WTD` = ?, `HG` = ?, `HD` = ?, `H` = 0, `WS` = 0, `WT` = 0, `XP` = 0 WHERE email = ?";
 
     db.query(sql, [req.body.XP, req.body.XPD, req.body.WS, req.body.WSD, req.body.WT, req.body.WTD, req.body.H, req.body.HD, req.body.user], (err, data)=> {
         if (err) throw err;
