@@ -7,7 +7,11 @@ var WS, WSG, WSD, WT, WTD, WTG, XP, XPD, XPG, H, HG, HD  // each goal curr amoun
 
 
 const Goals = () => {
-  const user = "1@gmail.com" // hardcoding
+  const urlParams = new URLSearchParams(window.location.search);
+  const user = urlParams.get('user');
+  console.log(user);
+  
+  //const user = "1@gmail.com" // hardcoding
 
   function getCurrGoals(event: { preventDefault: () => void; }) {
     event.preventDefault();

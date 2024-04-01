@@ -31,7 +31,7 @@ const Login = () => {
     console.log(res);
     if (res.result == "login_successful") {
       currUser = email;
-      window.location.href = "/home";
+      window.location.href = `/home?user=${currUser}`;
     } else if (res.result == "login_failed") {
       // tell them they already have an account
       console.log(res.result);

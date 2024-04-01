@@ -1,10 +1,14 @@
 import { ProgressBar } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react";
 import axios from "axios";
 
 const GoalSetup = () => {
-  const user = "1@gmail.com"
+  const urlParams = new URLSearchParams(window.location.search);
+  const user = urlParams.get('user');
+  console.log(user);
+
+  //const user = "1@gmail.com"
   const[XPG, setXPG] = useState('');
   const[XPD, setXPD] = useState('');
   const[WSG, setWSG] = useState('');
@@ -23,7 +27,7 @@ const GoalSetup = () => {
 
   function checkRes(res: string) {
     if(res === 'Success') {
-      window.location.href = '/goals'
+      window.location.href = '/goals';
     }
   }
 
