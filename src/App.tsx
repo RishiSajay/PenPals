@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './App.css';
 import microphoneImg from './assets/microphone.png';
+import openChat from './assets/chat.svg';
 import EmmaStatic from './assets/Emma Static.png';
 import axios from 'axios';
 import Definition from "./Components/Definition";
@@ -67,6 +68,7 @@ function App() {
       messenger.setAttribute('chat-title', 'Emma_Lefebvre');
       messenger.setAttribute('agent-id', '13286b34-c09b-4081-87f5-275c91baa4df');
       messenger.setAttribute('language-code', 'fr');
+      messenger.setAttribute('chat-icon', `data:image/svg+xml;base64,${btoa(openChat)}`);
       document.body.appendChild(messenger);
     };
 
@@ -165,11 +167,11 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="mic-container">
-        <button className="mic-button" onClick={runSpeechRecognition}>
+      <div className="mic-container icon-10">
+        <button className="mic-button bi bi-mic rounded-circle" onClick={runSpeechRecognition}>
           <img src={microphoneImg} alt="Microphone" />
         </button>
-        {isListening ? <p>I am listening! Please speak.</p> : <p>Click the button to start talking!</p>}
+        {isListening ? <p className="text-light">I am listening! Please speak.</p> : <p className="text-light">Click the button to start talking!</p>}
       </div>
       <div className="position-fixed top-0 end-0">
         {showCard != "" && <Definition word={showCard} trans={definition}></Definition>}
