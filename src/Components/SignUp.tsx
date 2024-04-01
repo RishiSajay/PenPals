@@ -28,7 +28,7 @@ const SignUp = () => {
     console.log(res)
     if(res === 'SignUpSuccess') {
       currUser = email
-      window.location.href = '/goalsetup'
+      window.location.href = `/goalsetup?user=${currUser}`
     }
     else if(res === "SignUpFail") {
       // tell them they already have an account
