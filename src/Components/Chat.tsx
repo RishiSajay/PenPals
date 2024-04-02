@@ -3,10 +3,16 @@ import React, { useState } from "react";
 import "../Styles/Chat.css";
 import axios from 'axios';
 
+let language = 'fr-FR';
+
 interface chatProps {
   botChat: string[];
   userChat: string[];
 }
+
+
+
+
 
 function Chat(chats: chatProps) {
   const {VITE_REACT_APP_KEY} = import.meta.env;
