@@ -1,38 +1,55 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import axios from 'axios'
-var currUser = ""
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+var currUser = "";
+export const environment = {
+  currUser,
+};
 
 const Login = () => {
-  const[email, setEmail] = useState('');
-  const[password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const task = "login";
 
-  function handleSubmit(event: { preventDefault: () => void; }) {
+  function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
-    axios.post('http://localhost:3000/login', {email, password})
-    .then(res => checkRes(res.data))
-    .catch(err => console.log(err));
+    axios
+      // .get(
+      //   "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource" +
+      //     "?email=" +
+      //     email +
+      //     "&password=" +
+      //     password +
+      //     "&task=" +
+      //     task
+      // )
+      .post(
+        "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource_2",
+        { email, password, task }
+      )
+      .then((res) => checkRes(res.data))
+      .catch((err) => console.log(err));
   }
 
-  function checkRes(res: string) {
-    console.log(res)
-    if(res === 'LoginSuccess') {
+  function checkRes(res: any) {
+    console.log(res);
+    if (res.result == "login_successful") {
       currUser = email;
-      window.location.href = `/home?user=${currUser}`
-    }
-    else {
-      // tell them they have the wrong combo
+      window.location.href = `/home?user=${currUser}`;
+    } else if (res.result == "login_failed") {
+      // tell them they already have an account
+      console.log(res.result);
+      console.log(res.result_info);
     }
   }
 
   return (
     <>
-        <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="d-flex justify-content-center">
-        <div className="card card w-25 mt-5 border border-primary rounded">
-          {" "}
-          <div className="card-body">
+          <div className="card card w-25 mt-5 border border-primary rounded">
+            {" "}
+            <div className="card-body">
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email address</label>
                 <input
@@ -41,7 +58,7 @@ const Login = () => {
                   id="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
-                  onChange={e=>setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else
@@ -54,7 +71,7 @@ const Login = () => {
                   className="form-control"
                   id="password"
                   placeholder="Password"
-                  onChange={e=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 ></input>
               </div>
               <div className="form-group form-check">
@@ -68,11 +85,11 @@ const Login = () => {
                 </label>
               </div>
               <div className="d-flex mt-2">
-              <button>Login</button>
+                <button>Login</button>
               </div>
+            </div>
           </div>
         </div>
-      </div>
       </form>
     </>
   );
