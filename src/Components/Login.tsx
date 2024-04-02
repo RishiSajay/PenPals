@@ -14,14 +14,18 @@ const Login = () => {
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     axios
-      .get(
-        "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource" +
-          "?email=" +
-          email +
-          "&password=" +
-          password +
-          "&task=" +
-          task
+      // .get(
+      //   "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource" +
+      //     "?email=" +
+      //     email +
+      //     "&password=" +
+      //     password +
+      //     "&task=" +
+      //     task
+      // )
+      .post(
+        "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource_2",
+        { email, password, task }
       )
       .then((res) => checkRes(res.data))
       .catch((err) => console.log(err));
