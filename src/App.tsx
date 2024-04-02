@@ -8,6 +8,8 @@ import Definition from "./Components/Definition";
 import { ProgressBar } from "react-bootstrap";
 
 
+let words = 0;
+
 function App() {
   const [isListening, setIsListening] = useState(false);
   const [showCard, setShowCard] = useState("");
@@ -42,6 +44,9 @@ function App() {
     const handleMouseUp = () => {
       const selection = window.getSelection()?.toString().trim();
       if (selection) {
+        // update goal
+        let wordsSelected = selection.split(" ").length;
+        console.log("words selected: ", wordsSelected);
         setShowCard(selection);
         getDefinition(selection);
       }
@@ -70,7 +75,16 @@ function App() {
       messenger.setAttribute('language-code', 'fr');
       messenger.setAttribute('chat-icon', `data:image/svg+xml;base64,${btoa(openChat)}`);
       document.body.appendChild(messenger);
+
+      messenger.addEventListener('df-user-input-entered', function(event){
+        // check number of words actually entered
+        let wordsTyped = event.detail['input'].split(" ").length - words;
+        console.log('words typed:', wordsTyped);
+        //LOG TO DB HERE (wordsTyped += )
+      });
     };
+
+    
 
     return () => {
       // Cleanup: Remove the script and messenger elements
@@ -128,10 +142,17 @@ function App() {
         if (!input) {
           throw new Error('Input field is not found');
         }
-    
+        
+        let wordsSpoken = transcript.split(" ").length;
+        console.log("words spoken: ", wordsSpoken);
+        // LOG TO DB HERE (wordsSpoken +=)
+        words = wordsSpoken;
+
         input.value = transcript; 
         input.dispatchEvent(new Event('input', {bubbles: true}));
         input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); 
+        
+
       } catch (error) {
         console.error("Error sending transcript to Dialogflow Messenger:", error);
       }
