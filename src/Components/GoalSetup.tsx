@@ -17,12 +17,23 @@ const GoalSetup = () => {
   const [WTD, setWTD] = useState("");
   const [HG, setHG] = useState("");
   const [HD, setHD] = useState("");
+  const [WS, setWS] = useState("");
+  const [WT, setWT] = useState("");
+  const [XP, setXP] = useState("");
+  const [H, setH] = useState("");
+
+  
+
 
   const task = "write_goals";
 
   function initialGoals(event: { preventDefault: () => void }) {
     //setup for the first time
     event.preventDefault();
+    setWS('0');
+    setWT('0');
+    setXP('0');
+    setH('0');
     axios
       // .post("http://localhost:3000/goalsetup", {
       //   XPG,
@@ -38,12 +49,16 @@ const GoalSetup = () => {
       .post(
         "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
         {
+          XP,
           XPG,
           XPD,
+          WS,
           WSG,
           WSD,
+          WT,
           WTG,
           WTD,
+          H,
           HG,
           HD,
           user,
@@ -57,7 +72,8 @@ const GoalSetup = () => {
   function checkRes(res: any) {
     console.log(res);
     if (res.result === "Success") {
-      window.location.href = "/goals";
+      //console.log("success");
+      window.location.href = "/home?user=" + user;
     }
   }
 

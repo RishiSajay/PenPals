@@ -61,12 +61,55 @@ interface DialogflowResponseEventDetail {
   };
 }
 
+let words = 0;
+
 function App() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const user = urlParams.get('user');
+  const goalPath = "/goals?user=" + user;
+
   const [isListening, setIsListening] = useState(false);
   const [showCard, setShowCard] = useState("");
   const [definition, setDefinition] = useState("");
 
   const {VITE_REACT_APP_KEY} = import.meta.env;
+
+  function updateWS(res: any, words: number) {
+    const updatedWords = Number(res.WS) + words;
+    const WS = updatedWords.toString();
+
+    const task = "write_goals";
+      axios
+        .post(
+          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+          {
+            WS,
+            user,
+            task,
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+  }
+
+
+  function updateWT(res: any, words: number) {
+    const updatedWords = Number(res.WT) + words;
+    const WT = updatedWords.toString();
+
+    const task = "write_goals";
+      axios
+        .post(
+          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+          {
+            WT,
+            user,
+            task,
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+  }
 
   const getDefinition = async (word: string) => {
       const options = {
@@ -95,6 +138,9 @@ function App() {
     const handleMouseUp = () => {
       const selection = window.getSelection()?.toString().trim();
       if (selection) {
+        // update goal
+        let wordsSelected = selection.split(" ").length;
+        console.log("words selected: ", wordsSelected);
         setShowCard(selection);
         getDefinition(selection);
       }
@@ -121,7 +167,6 @@ function App() {
       messenger.setAttribute('language-code', 'fr');
       messenger.setAttribute('chat-icon', `data:image/svg+xml;base64,${btoa(openChat)}`);
       document.body.appendChild(messenger);
-  
       messenger.addEventListener('df-response-received', (event: Event) => {
         const customEvent = event as CustomEvent<DialogflowResponseEventDetail>;
         try {
@@ -135,7 +180,25 @@ function App() {
         }
       });
     };
-  
+      messenger.addEventListener('df-user-input-entered', function(event){
+        // check number of words actually entered
+        let wordsTyped = event.detail['input'].split(" ").length - words;
+        console.log('words typed:', wordsTyped);
+
+        // read current number of words typed to update
+        const task = "read_goals"
+        axios
+          .post(
+            "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+            {
+              user,
+              task,
+            }
+          )
+          .then((res) => updateWT(res.data.result, wordsTyped))
+          .catch((err) => console.log(err));
+      });
+    };
     return () => {
       // Cleanup: Remove the script and messenger elements
       document.body.removeChild(script);
@@ -193,14 +256,35 @@ function App() {
         if (!input) {
           throw new Error('Input field is not found');
         }
-    
+        
+        let wordsSpoken = transcript.split(" ").length;
+        console.log("words spoken: ", wordsSpoken);
+
+        // read current number of words spoken to update
+        const task = "read_goals"
+        axios
+          .post(
+            "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+            {
+              user,
+              task,
+            }
+          )
+          .then((res) => updateWS(res.data.result, wordsSpoken))
+          .catch((err) => console.log(err));
+
+        words = wordsSpoken;
+
         input.value = transcript; 
         input.dispatchEvent(new Event('input', {bubbles: true}));
         input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); 
+        
+
       } catch (error) {
         console.error("Error sending transcript to Dialogflow Messenger:", error);
       }
     };
+    
     
 
     recognition.onerror = (event) => {
@@ -210,6 +294,8 @@ function App() {
   }, []);
 
   return (
+    
+
     <div className="App" style={{ 
       backgroundImage: `url(${EmmaStatic})`,
       backgroundSize: 'cover',
@@ -229,6 +315,13 @@ function App() {
             Talking about Food
             <ProgressBar variant="info" now={40} />
             Artwork
+          </div>
+          <div className="container">
+            <div className="d-flex justify-content-center">
+              <a href={goalPath} className="btn btn-primary">
+                Adjust Goals
+              </a>
+            </div>
           </div>
         </div>
       </div>
