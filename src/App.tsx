@@ -7,6 +7,59 @@ import axios from 'axios';
 import Definition from "./Components/Definition";
 import { ProgressBar } from "react-bootstrap";
 
+import fs from "fs";
+import path from "path";
+import OpenAI from "openai";
+
+const {VITE_OPENAI_API_KEY} = import.meta.env;
+console.log(VITE_OPENAI_API_KEY);
+
+const openai = new OpenAI({
+  apiKey: VITE_OPENAI_API_KEY, // Access the environment variable
+  dangerouslyAllowBrowser: true
+});
+
+
+//const speechFile = path.resolve("./assets/speech.mp3");
+
+function speak_backup(text: string): void {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'fr-FR'
+  window.speechSynthesis.speak(utterance);
+}
+
+async function speak(text: string): Promise<void> {
+
+   const mp3: any = await openai.audio.speech.create({
+    model: "tts-1",
+    voice: "nova",
+    input: text,
+  });
+
+  console.log(mp3); 
+
+  const arrayBuffer = await mp3.arrayBuffer();
+  const audioBlob = new Blob([arrayBuffer], { type: 'audio/mp3' });
+  const audioUrl = URL.createObjectURL(audioBlob);
+
+  // Use the HTML Audio API to play the audio
+  const audio = new Audio(audioUrl);
+  audio.play();
+
+  audio.onended = () => {
+    URL.revokeObjectURL(audioUrl);
+  };
+  // const buffer: Buffer = Buffer.from(await mp3.arrayBuffer());
+  // await fs.promises.writeFile(speechFile, buffer);
+}
+
+interface DialogflowResponseEventDetail {
+  response: {
+    queryResult?: {
+      fulfillmentText?: string;
+    };
+  };
+}
 
 function App() {
   const [isListening, setIsListening] = useState(false);
@@ -55,13 +108,11 @@ function App() {
   }, []); // Ensure useEffect runs only once at mount
 
   useEffect(() => {
-    // Dynamically load the Dialogflow Messenger
     const script = document.createElement('script');
     script.src = "https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1";
     script.async = true;
     document.body.appendChild(script);
-    
-
+  
     script.onload = () => {
       const messenger = document.createElement('df-messenger');
       messenger.setAttribute('intent', 'WELCOME');
@@ -70,8 +121,21 @@ function App() {
       messenger.setAttribute('language-code', 'fr');
       messenger.setAttribute('chat-icon', `data:image/svg+xml;base64,${btoa(openChat)}`);
       document.body.appendChild(messenger);
+  
+      messenger.addEventListener('df-response-received', (event: Event) => {
+        const customEvent = event as CustomEvent<DialogflowResponseEventDetail>;
+        try {
+          const fulfillmentText = customEvent.detail.response.queryResult?.fulfillmentText;
+          console.log(`Response: ${fulfillmentText}`);
+          if (fulfillmentText) {
+            speak(fulfillmentText); // Assuming 'speak' is defined elsewhere in your code
+          }
+        } catch (error) {
+          console.error("Error extracting response text: ", error);
+        }
+      });
     };
-
+  
     return () => {
       // Cleanup: Remove the script and messenger elements
       document.body.removeChild(script);
@@ -80,7 +144,8 @@ function App() {
         document.body.removeChild(messenger);
       }
     };
-  }, []);
+  }, []); // This is the correct ending for the useEffect hook with an empty dependency array.
+  
 
   const runSpeechRecognition = useCallback(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
