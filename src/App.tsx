@@ -179,7 +179,6 @@ function App() {
           console.error("Error extracting response text: ", error);
         }
       });
-    };
       messenger.addEventListener('df-user-input-entered', function(event){
         // check number of words actually entered
         let wordsTyped = event.detail['input'].split(" ").length - words;
@@ -198,7 +197,7 @@ function App() {
           .then((res) => updateWT(res.data.result, wordsTyped))
           .catch((err) => console.log(err));
       });
-    };
+  };
     return () => {
       // Cleanup: Remove the script and messenger elements
       document.body.removeChild(script);
@@ -256,6 +255,8 @@ function App() {
         if (!input) {
           throw new Error('Input field is not found');
         }
+
+        input.focus();
         
         let wordsSpoken = transcript.split(" ").length;
         console.log("words spoken: ", wordsSpoken);
@@ -278,7 +279,25 @@ function App() {
         input.value = transcript; 
         input.dispatchEvent(new Event('input', {bubbles: true}));
         input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true})); 
+        console.log(input);
+        input.dispatchEvent(new Event('input', {bubbles: true}));
         
+        // Dispatch the Enter keydown event
+        input.dispatchEvent(new KeyboardEvent('keydown', {'key': 'Enter', bubbles: true}));
+        
+        const sendIcon = userInput.shadowRoot.querySelector('#sendIcon');
+        if (!sendIcon) {
+            throw new Error('Send icon not found');
+        }
+
+        // Dispatch click event to the send icon
+        const clickEvent = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: true
+        });
+
+        sendIcon.dispatchEvent(clickEvent);
 
       } catch (error) {
         console.error("Error sending transcript to Dialogflow Messenger:", error);
