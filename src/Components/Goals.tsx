@@ -49,6 +49,7 @@ const Goals = () => {
     }
     catch{
       // default values that weren't initially set
+      console.log("defaulting progress");
       setWS('0');
       setWT('0');
       setXP('0');
