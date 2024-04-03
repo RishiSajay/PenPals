@@ -85,7 +85,7 @@ const GoalSetup = () => {
           <div className="card card w-25 mt-5 border border-primary rounded">
             {" "}
             <div className="card-body">
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="XP">XP Goal</label>
                 <input
                   type="int"
@@ -101,7 +101,7 @@ const GoalSetup = () => {
                   placeholder="enter a date to achieve your XP goal by"
                   onChange={(e) => setXPD(e.target.value)}
                 ></input>
-              </div>
+              </div> */}
               <div className="form-group mt-2">
                 <label htmlFor="WS">Words Spoken Goal</label>
                 <input

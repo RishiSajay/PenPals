@@ -114,7 +114,7 @@ const Goals = () => {
           <div className="card card w-25 mt-5 border border-primary rounded">
             {" "}
             <div className="card-body">
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="XP">XP Goal</label>
                 <ProgressBar variant="info" now={Number(XP)} max={Number(XPG)}></ProgressBar>
                 <input
@@ -133,7 +133,7 @@ const Goals = () => {
                   value={XPD}
                   onChange={(e) => setXPD(e.target.value)}
                 ></input>
-              </div>
+              </div> */}
               <div className="form-group mt-2">
                 <label htmlFor="WS">Words Spoken Goal</label>
                 <ProgressBar variant="info" now={Number(WS)} max={Number(WSG)}></ProgressBar>
