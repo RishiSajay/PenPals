@@ -45,7 +45,6 @@ function Chat(chats: chatProps) {
   const handleClick = (word: string) => {
     setShowCard(word);
     getDefinition(word);
-    // LOG TO DB HERE (highlight++)
   };
   return (
     <div>

@@ -107,6 +107,24 @@ function App() {
     console.log(wordsT);
   }
 
+  function updateH(res: any, words: number) {
+    const updatedWords = Number(res.H) + words;
+    const H = updatedWords.toString();
+
+    const task = "write_goals";
+      axios
+        .post(
+          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+          {
+            H,
+            user,
+            task,
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+  }
+
   const getDefinition = async (word: string) => {
       const options = {
           method: 'GET',
@@ -146,8 +164,22 @@ function App() {
       const selection = window.getSelection()?.toString().trim();
       if (selection) {
         // update goal
-        let wordsSelected = selection.split(" ").length;
+        const wordsSelected = selection.split(" ").length;
         console.log("words selected: ", wordsSelected);
+
+        // read current number of words typed to update
+        const task = "read_goals"
+        axios
+          .post(
+            "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+            {
+              user,
+              task,
+            }
+          )
+          .then((res) => updateH(res.data.result, wordsSelected))
+          .catch((err) => console.log(err));
+
         setShowCard(selection);
         getDefinition(selection);
       }
