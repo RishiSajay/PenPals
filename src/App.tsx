@@ -8,7 +8,7 @@ import Definition from "./Components/Definition";
 import { ProgressBar } from "react-bootstrap";
 
 
-let words = 0;
+let currWords = 0;
 
 function App() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -107,23 +107,7 @@ function App() {
     console.log(wordsT);
   }
 
-  function updateH(res: any, words: number) {
-    const updatedWords = Number(res.H) + words;
-    const H = updatedWords.toString();
-
-    const task = "write_goals";
-      axios
-        .post(
-          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
-          {
-            H,
-            user,
-            task,
-          }
-        )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-  }
+  
 
   const getDefinition = async (word: string) => {
       const options = {
@@ -211,7 +195,7 @@ function App() {
 
       messenger.addEventListener('df-user-input-entered', function(event){
         // check number of words actually entered
-        let wordsTyped = event.detail['input'].split(" ").length - words;
+        let wordsTyped = event.detail['input'].split(" ").length - currWords;
         console.log('words typed:', wordsTyped);
 
         // read current number of words typed to update
@@ -304,6 +288,8 @@ function App() {
           .then((res) => updateWS(res.data.result, wordsSpoken))
           .catch((err) => console.log(err));
 
+
+          currWords = wordsSpoken;
 
         input.value = transcript; 
         input.dispatchEvent(new Event('input', {bubbles: true}));
