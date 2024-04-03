@@ -61,7 +61,7 @@ interface DialogflowResponseEventDetail {
   };
 }
 
-let words = 0;
+let currWords = 0;
 
 function App() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -71,8 +71,36 @@ function App() {
   const [isListening, setIsListening] = useState(false);
   const [showCard, setShowCard] = useState("");
   const [definition, setDefinition] = useState("");
+  const [wordsT, setWordsT] = useState(0);
+  const [wordsS, setWordsS] = useState(0);
+  const [wordsH, setWordsH] = useState(0);
+  const [WSG, setWSG] = useState(0);
+  const [WTG, setWTG] = useState(0);
+  const [HG, setHG] = useState(0);
 
   const {VITE_REACT_APP_KEY} = import.meta.env;
+
+  function getCurrentGoals() {
+    const task = "read_goals";
+    axios
+      .post(
+        "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+        {
+          user,
+          task
+        }
+      )
+      .then((res) => {
+        setWordsS(res.data.result["WS"]),
+        setWordsT(res.data.result["WT"]),
+        setWordsH(res.data.result["H"]),
+        setWSG(res.data.result["WSG"]),
+        setWTG(res.data.result["WTG"]),
+        setHG(res.data.result["HG"])
+      })
+      .catch((err) => console.log(err));
+  }
+  getCurrentGoals();
 
   function updateWS(res: any, words: number) {
     const updatedWords = Number(res.WS) + words;
@@ -90,6 +118,25 @@ function App() {
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+    setWordsS(updatedWords);
+  }
+
+  function updateH(res: any, words: number) {
+    const updatedWords = Number(res.WS) + words;
+    const H = updatedWords.toString();
+    const task = "write_goals";
+      axios
+        .post(
+          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+          {
+            H,
+            user,
+            task,
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    setWordsH(updatedWords);
   }
 
 
@@ -109,7 +156,11 @@ function App() {
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+    setWordsT(updatedWords);
+    console.log(wordsT);
   }
+
+  
 
   const getDefinition = async (word: string) => {
       const options = {
@@ -127,8 +178,19 @@ function App() {
           }
           };
       try {
-          const response = await axios.request(options);
-          setDefinition(response.data.matches[0].translation);
+        const task = "read_goals";
+        axios
+        .post(
+          "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+          {
+            user,
+            task,
+          }
+        )
+        .then((res) => updateH(res.data.result, word.split(" ").length))
+        .catch((err) => console.log(err));
+        const response = await axios.request(options);
+        setDefinition(response.data.matches[0].translation);
       } catch (error) {
           console.error(error);
       }
@@ -139,8 +201,22 @@ function App() {
       const selection = window.getSelection()?.toString().trim();
       if (selection) {
         // update goal
-        let wordsSelected = selection.split(" ").length;
+        const wordsSelected = selection.split(" ").length;
         console.log("words selected: ", wordsSelected);
+
+        // read current number of words typed to update
+        const task = "read_goals"
+        axios
+          .post(
+            "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
+            {
+              user,
+              task,
+            }
+          )
+          .then((res) => updateH(res.data.result, wordsSelected))
+          .catch((err) => console.log(err));
+
         setShowCard(selection);
         getDefinition(selection);
       }
@@ -181,7 +257,7 @@ function App() {
       });
       messenger.addEventListener('df-user-input-entered', function(event){
         // check number of words actually entered
-        let wordsTyped = event.detail['input'].split(" ").length - words;
+        let wordsTyped = event.detail['input'].split(" ").length - currWords;
         console.log('words typed:', wordsTyped);
 
         // read current number of words typed to update
@@ -274,7 +350,8 @@ function App() {
           .then((res) => updateWS(res.data.result, wordsSpoken))
           .catch((err) => console.log(err));
 
-        words = wordsSpoken;
+
+          currWords = wordsSpoken;
 
         input.value = transcript; 
         input.dispatchEvent(new Event('input', {bubbles: true}));
@@ -326,14 +403,12 @@ function App() {
         <div className="card w-25 mt-5 border border-dark rounded">
           <div className="card-body">
             <h3 className="text-center">Goals</h3>
-            <ProgressBar variant="info" now={20} />
-            Cultural References
-            <ProgressBar variant="info" now={70} />
-            Places
-            <ProgressBar variant="info" now={10} />
-            Talking about Food
-            <ProgressBar variant="info" now={40} />
-            Artwork
+            <ProgressBar variant="info" now={wordsS} max={WSG}/>
+            Words Spoken
+            <ProgressBar variant="info" now={wordsT} max={WTG} />
+            Words Typed
+            <ProgressBar variant="info" now={wordsH} max={HG} />
+            Words Highlighted
           </div>
           <div className="container">
             <div className="d-flex justify-content-center">
