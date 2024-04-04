@@ -8,7 +8,6 @@
 }
 
 .mic-button {
-  background-color: transparent;
   border: none;
   cursor: pointer;
 }
@@ -24,6 +23,9 @@
     /* width: auto; Adjust based on your content */
     /* z-index: 1000; Ensure it sits above the background image */
   /* } */
+.goals-container {
+  overflow: hidden;
+}
 
 /* Set the background image for the App container */
 .App {
