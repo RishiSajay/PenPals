@@ -10,6 +10,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [signUpFailed, setSignUpFailed] = useState(false);
+
   const task = "sign_up";
 
   function handleSubmit(event: { preventDefault: () => void }) {
@@ -43,6 +45,7 @@ const SignUp = () => {
       window.location.href = `/goalsetup?user=${currUser}`;
     } else if (res.result == "sign_up_failed") {
       // tell them they already have an account
+      setSignUpFailed(true);
       console.log(res.result);
       console.log(res.result_info);
     }
@@ -63,6 +66,7 @@ const SignUp = () => {
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 ></input>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else
@@ -76,6 +80,7 @@ const SignUp = () => {
                   id="password1"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 ></input>
               </div>
               <div className="form-group mt-2">
@@ -86,11 +91,27 @@ const SignUp = () => {
                   id="password2"
                   placeholder="Confirm Password"
                   onChange={(e) => setPassword2(e.target.value)}
+                  required
                 ></input>
               </div>
               <div className="d-flex mt-2">
-                <button>Sign Up</button>
+                <button className="btn btn-primary">Sign Up</button>
               </div>
+              {signUpFailed && (
+                <div
+                  className="alert alert-danger alert-dismissible mt-2"
+                  role="alert"
+                >
+                  <div>This email already exists in the system!</div>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setSignUpFailed(false)}
+                  ></button>
+                </div>
+              )}
             </div>
           </div>
         </div>

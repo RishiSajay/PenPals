@@ -9,6 +9,7 @@ export const environment = {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginFailed, setLoginFailed] = useState(false);
   const task = "login";
 
   function handleSubmit(event: { preventDefault: () => void }) {
@@ -37,7 +38,7 @@ const Login = () => {
       currUser = email;
       window.location.href = `/home?user=${currUser}`;
     } else if (res.result == "login_failed") {
-      // tell them they already have an account
+      setLoginFailed(true);
       console.log(res.result);
       console.log(res.result_info);
     }
@@ -59,6 +60,7 @@ const Login = () => {
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 ></input>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else
@@ -72,21 +74,27 @@ const Login = () => {
                   id="password"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 ></input>
-              </div>
-              <div className="form-group form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="exampleCheck1"
-                ></input>
-                <label className="form-check-label" htmlFor="exampleCheck1">
-                  Remember me (it won't matter)
-                </label>
               </div>
               <div className="d-flex mt-2">
-                <button>Login</button>
+                <button className="btn btn-primary">Login</button>
               </div>
+              {loginFailed && (
+                <div
+                  className="alert alert-danger alert-dismissible mt-2 "
+                  role="alert"
+                >
+                  <div>The email or password is incorrect!</div>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setLoginFailed(false)}
+                  ></button>
+                </div>
+              )}
             </div>
           </div>
         </div>
