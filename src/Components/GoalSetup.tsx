@@ -1,4 +1,3 @@
-import { ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import axios from "axios";
@@ -9,8 +8,8 @@ const GoalSetup = () => {
   console.log(user);
 
   //const user = "1@gmail.com"
-  const [XPG, setXPG] = useState("");
-  const [XPD, setXPD] = useState("");
+  // const [XPG, setXPG] = useState("");
+  // const [XPD, setXPD] = useState("");
   const [WSG, setWSG] = useState("");
   const [WSD, setWSD] = useState("");
   const [WTG, setWTG] = useState("");
@@ -19,21 +18,18 @@ const GoalSetup = () => {
   const [HD, setHD] = useState("");
   const [WS, setWS] = useState("");
   const [WT, setWT] = useState("");
-  const [XP, setXP] = useState("");
+  // const [XP, setXP] = useState("");
   const [H, setH] = useState("");
-
-  
-
 
   const task = "write_goals";
 
   function initialGoals(event: { preventDefault: () => void }) {
     //setup for the first time
     event.preventDefault();
-    setWS('0');
-    setWT('0');
-    setXP('0');
-    setH('0');
+    setWS("0");
+    setWT("0");
+    // setXP("0");
+    setH("0");
     axios
       // .post("http://localhost:3000/goalsetup", {
       //   XPG,
@@ -49,9 +45,9 @@ const GoalSetup = () => {
       .post(
         "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
         {
-          XP,
-          XPG,
-          XPD,
+          // XP,
+          // XPG,
+          // XPD,
           WS,
           WSG,
           WSD,

@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import dotenv from "dotenv";
-import Translate from "@google-cloud/translate";
-import axios from "axios";
 
 interface definitionProps {
   word: string;
   trans: string;
 }
 
-
-
 function Definition(props: definitionProps) {
-    return (
+  return (
     <div>
-        <Card>
+      <Card>
         <Card.Body>
-            <Card.Title>{`Word: ${props.word}`}</Card.Title>
-            <Card.Text>{`Translation: ${props.trans}`}</Card.Text>
+          <Card.Title>{`Word: ${props.word}`}</Card.Title>
+          <Card.Text>{`Translation: ${props.trans}`}</Card.Text>
         </Card.Body>
-        </Card>
+      </Card>
     </div>
-    );
+  );
 }
 
 export default Definition;
