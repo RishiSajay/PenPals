@@ -1,10 +1,9 @@
-import React from "react";
 import "../../Styles/Home.css";
 import PracticeCard from "./PracticeCard";
 
 const Home = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const user = urlParams.get('user');
+  const user = urlParams.get("user");
   const appPath = "/app?user=" + user;
   const goalPath = "/goals?user=" + user;
 
@@ -26,11 +25,11 @@ const Home = () => {
       </div>
 
       <div className="container">
-      <div className="d-flex justify-content-center">
-        <a href={goalPath} className="btn btn-primary">
+        <div className="d-flex justify-content-center">
+          <a href={goalPath} className="btn btn-primary">
             Adjust Goals
-        </a>
-      </div>
+          </a>
+        </div>
       </div>
     </>
   );
