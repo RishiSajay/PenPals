@@ -10,7 +10,6 @@ import { ProgressBar } from "react-bootstrap";
 import OpenAI from "openai";
 
 const { VITE_OPENAI_API_KEY } = import.meta.env;
-console.log(VITE_OPENAI_API_KEY);
 
 const openai = new OpenAI({
   apiKey: VITE_OPENAI_API_KEY, // Access the environment variable
