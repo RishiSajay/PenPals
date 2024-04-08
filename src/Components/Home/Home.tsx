@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../../Styles/Home.css";
 import PracticeCard from "./PracticeCard";
 
@@ -6,6 +7,18 @@ const Home = () => {
   const user = urlParams.get("user");
   const appPath = "/app?user=" + user;
   const goalPath = "/goals?user=" + user;
+
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
 
   return (
     <>
