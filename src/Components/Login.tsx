@@ -79,6 +79,14 @@ const Login = () => {
               </div>
               <div className="d-flex mt-2">
                 <button className="btn btn-primary">Login</button>
+                <button
+                  className="btn btn-primary ms-3"
+                  onClick={() => {
+                    window.location.href = "/";
+                  }}
+                >
+                  Back
+                </button>
               </div>
               {loginFailed && (
                 <div
