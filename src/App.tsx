@@ -73,6 +73,18 @@ function App() {
   const [WTG, setWTG] = useState(0);
   const [HG, setHG] = useState(0);
 
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
+
   const { VITE_REACT_APP_KEY } = import.meta.env;
 
   function getCurrentGoals() {
