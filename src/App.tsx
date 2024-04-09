@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import microphoneImg from "./assets/microphone.png";
 import openChat from "./assets/chat.svg";
@@ -7,8 +7,6 @@ import axios from "axios";
 import Definition from "./Components/Definition";
 import { ProgressBar } from "react-bootstrap";
 
-import fs from "fs";
-import path from "path";
 import OpenAI from "openai";
 
 const { VITE_OPENAI_API_KEY } = import.meta.env;
@@ -21,11 +19,11 @@ const openai = new OpenAI({
 
 //const speechFile = path.resolve("./assets/speech.mp3");
 
-function speak_backup(text: string): void {
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "fr-FR";
-  window.speechSynthesis.speak(utterance);
-}
+// function speak_backup(text: string): void {
+//   const utterance = new SpeechSynthesisUtterance(text);
+//   utterance.lang = "fr-FR";
+//   window.speechSynthesis.speak(utterance);
+// }
 
 async function speak(text: string): Promise<void> {
   const mp3: any = await openai.audio.speech.create({
@@ -64,7 +62,6 @@ let currWords = 0;
 function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
-  const goalPath = "/goals?user=" + user;
 
   const [isListening, setIsListening] = useState(false);
   const [showCard, setShowCard] = useState("");
@@ -75,6 +72,18 @@ function App() {
   const [WSG, setWSG] = useState(0);
   const [WTG, setWTG] = useState(0);
   const [HG, setHG] = useState(0);
+
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
 
   const { VITE_REACT_APP_KEY } = import.meta.env;
 
@@ -227,14 +236,17 @@ function App() {
           console.error("Error extracting response text: ", error);
         }
       });
-      messenger.addEventListener("df-user-input-entered", function (event) {
-        // check number of words actually entered
-        let wordsTyped = event.detail["input"].split(" ").length - currWords;
-        console.log("words typed:", wordsTyped);
+      messenger.addEventListener(
+        "df-user-input-entered",
+        function (event: any) {
+          // check number of words actually entered
+          let wordsTyped = event.detail["input"].split(" ").length - currWords;
+          console.log("words typed:", wordsTyped);
 
-        // update words typed
-        updateWTLocal(wordsTyped);
-      });
+          // update words typed
+          updateWTLocal(wordsTyped);
+        }
+      );
     };
     return () => {
       // Cleanup: Remove the script and messenger elements

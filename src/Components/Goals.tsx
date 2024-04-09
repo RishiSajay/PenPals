@@ -1,7 +1,7 @@
 import { ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const Goals = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -21,6 +21,18 @@ const Goals = () => {
   const [WT, setWT] = useState("");
   const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
 
   function getCurrGoals() {
     const task = "read_goals";
@@ -63,9 +75,9 @@ const Goals = () => {
   }
 
   // need these set from the frontend when user chooses goal to update
-  const [goal, setGoal] = useState("");
-  const [val, setVal] = useState("");
-  const [date, setDate] = useState("");
+  // const [goal, setGoal] = useState("");
+  // const [val, setVal] = useState("");
+  // const [date, setDate] = useState("");
 
   function goalUpdate(event: { preventDefault: () => void }) {
     // update existing goal
@@ -97,7 +109,7 @@ const Goals = () => {
   }
 
   function checkRes(res: string) {
-    console.log("success");
+    console.log(res);
     window.location.href = "/home?user=" + user;
   }
 

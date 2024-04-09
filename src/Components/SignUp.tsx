@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import GoalSetup from "./GoalSetup";
-import Goals from "./Goals";
 
 let currUser: string = "";
 
@@ -10,6 +8,8 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [signUpFailed, setSignUpFailed] = useState(false);
+
   const task = "sign_up";
   const [isVisible, setIsVisible] = useState(false)
 
@@ -46,6 +46,7 @@ const SignUp = () => {
       window.location.href = `/goalsetup?user=${currUser}`;
     } else if (res.result == "sign_up_failed") {
       // tell them they already have an account
+      setSignUpFailed(true);
       console.log(res.result);
       console.log(res.result_info);
     }
@@ -66,6 +67,7 @@ const SignUp = () => {
                   aria-describedby="emailHelp"
                   placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 ></input>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else
@@ -79,6 +81,7 @@ const SignUp = () => {
                   id="password1"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 ></input>
               </div>
               <div className="form-group mt-2">
@@ -89,15 +92,38 @@ const SignUp = () => {
                   id="password2"
                   placeholder="Confirm Password"
                   onChange={(e) => setPassword2(e.target.value)}
+                  required
                 ></input>
               </div>
               <small id="pass" className="form-text text-danger">
               {isVisible ? "Passwords do not match" : ""}
                 </small>
               <div className="d-flex mt-2">
-              <button type="submit" className="btn btn-primary">Sign Up</button>
+                <button className="btn btn-primary">Sign Up</button>
+                <button
+                  className="btn btn-primary ms-3"
+                  onClick={() => {
+                    window.location.href = "/";
+                  }}
+                >
+                  Back
+                </button>
               </div>
-              <a href={"/login"}>Already have an account</a>
+              {signUpFailed && (
+                <div
+                  className="alert alert-danger alert-dismissible mt-2"
+                  role="alert"
+                >
+                  <div>This email already exists in the system!</div>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => setSignUpFailed(false)}
+                  ></button>
+                </div>
+              )}
             </div>
           </div>
         </div>
