@@ -78,16 +78,9 @@ const Login = () => {
                 ></input>
               </div>
               <div className="d-flex mt-2">
-                <button className="btn btn-primary">Login</button>
-                <button
-                  className="btn btn-primary ms-3"
-                  onClick={() => {
-                    window.location.href = "/";
-                  }}
-                >
-                  Back
-                </button>
+              <button type="submit" className="btn btn-primary">Login</button>
               </div>
+              <a href={"/signup"}>Don't have an account</a>
               {loginFailed && (
                 <div
                   className="alert alert-danger alert-dismissible mt-2 "

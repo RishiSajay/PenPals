@@ -98,17 +98,10 @@ const SignUp = () => {
               <small id="pass" className="form-text text-danger">
               {isVisible ? "Passwords do not match" : ""}
                 </small>
-              <div className="d-flex mt-2">
-                <button className="btn btn-primary">Sign Up</button>
-                <button
-                  className="btn btn-primary ms-3"
-                  onClick={() => {
-                    window.location.href = "/";
-                  }}
-                >
-                  Back
-                </button>
+                <div className="d-flex mt-2">
+              <button type="submit" className="btn btn-primary">Sign Up</button>
               </div>
+              <a href={"/login"}>Already have an account</a>
               {signUpFailed && (
                 <div
                   className="alert alert-danger alert-dismissible mt-2"
