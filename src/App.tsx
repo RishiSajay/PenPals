@@ -363,15 +363,15 @@ function App() {
   const [WTG, setWTG] = useState(0);
   const [HG, setHG] = useState(0);
   const [Social, setSocial] = useState(0);
-  const [SocialG, setSocialG] = useState(0);
+  const [SocialG, setSocialG] = useState(3);
   const [Restaurant, setRestaurant] = useState(0);
-  const [RestaurantG, setRestaurantG] = useState(0);
+  const [RestaurantG, setRestaurantG] = useState(96);
   const [Food, setFood] = useState(0);
-  const [FoodG, setFoodG] = useState(0);
+  const [FoodG, setFoodG] = useState(92);
   const [Beverages, setBeverages] = useState(0);
-  const [BeveragesG, setBeveragesG] = useState(0);
+  const [BeveragesG, setBeveragesG] = useState(48);
   const [Paying, setPaying] = useState(0);
-  const [PayingG, setPayingG] = useState(0);
+  const [PayingG, setPayingG] = useState(8);
 
   const [userVerified, setUserVerified] = useState(false);
   const checkUserAuth = (user: any) => {
@@ -402,17 +402,17 @@ function App() {
           setWordsH(Number(res.data.result["H"])),
           setWSG(Number(res.data.result["WSG"])),
           setWTG(Number(res.data.result["WTG"])),
-          setHG(Number(res.data.result["HG"])),
-          setRestaurant(Number(res.data.result["Restaurant"])),
-          setRestaurantG(Number(res.data.result["RestaurantG"])),
-          setBeverages(Number(res.data.result["Beverages"])),
-          setBeveragesG(Number(res.data.result["BeveragesG"])),
-          setFood(Number(res.data.result["Food"])),
-          setFoodG(Number(res.data.result["FoodG"])),
-          setSocial(Number(res.data.result["Social"])),
-          setSocialG(Number(res.data.result["SocialG"])),
-          setPaying(Number(res.data.result["Paying"])),
-          setPayingG(Number(res.data.result["PayingG"]));
+          setHG(Number(res.data.result["HG"]));
+          //setRestaurant(Number(res.data.result["Restaurant"])),
+          //setRestaurantG(Number(res.data.result["RestaurantG"])),
+          //setBeverages(Number(res.data.result["Beverages"])),
+          //setBeveragesG(Number(res.data.result["BeveragesG"])),
+          //setFood(Number(res.data.result["Food"])),
+          //setFoodG(Number(res.data.result["FoodG"])),
+          //setSocial(Number(res.data.result["Social"])),
+          //setSocialG(Number(res.data.result["SocialG"])),
+          //setPaying(Number(res.data.result["Paying"])),
+          //setPayingG(Number(res.data.result["PayingG"]));
       })
       .catch((err) => console.log(err));
   }
@@ -434,14 +434,19 @@ function App() {
     switch(intentGroup) {
       case "restaurant":
         updateRestaurantLocal(words);
+        break;
       case "beverages":
         updateBeveragesLocal(words);
+        break;
       case "social":
         updateSocialLocal(words);
+        break;
       case "paying":
         updatePayingLocal(words);
+        break;
       case "food":
         updateFoodLocal(words);
+        break;
     }
   }
 
@@ -585,11 +590,8 @@ function App() {
             const userIntent = customEvent.detail.response.queryResult?.intent?.displayName;
             const intent = userIntent ? userIntent.toString() : "defaultIntent";
             const intentGroup = getIntentGroup(intent);
-            console.log(userIntent);
-            console.log("This is the intent" + intentGroup);
             if (intentGroup != "no intent found") {
               updateIntentLocal(1, intentGroup);
-              console.log("Updating intent");
             }
             
           if (fulfillmentText) {
@@ -749,10 +751,14 @@ function App() {
             <h3 className="text-center">Goals</h3>
             <ProgressBar variant="info" now={Restaurant} max={RestaurantG} />
             Restaurant
-            <ProgressBar variant="info" now={wordsT} max={WTG} />
-            Words Typed
-            <ProgressBar variant="info" now={wordsH} max={HG} />
-            Words Highlighted
+            <ProgressBar variant="info" now={Beverages} max={BeveragesG} />
+            Beverages
+            <ProgressBar variant="info" now={Paying} max={PayingG} />
+            Paying
+            <ProgressBar variant="info" now={Food} max={FoodG} />
+            Food
+            <ProgressBar variant="info" now={Social} max={SocialG} />
+            Social
           </div>
           <div className="container">
             <div className="d-flex justify-content-center">
