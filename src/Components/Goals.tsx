@@ -21,6 +21,8 @@ const Goals : React.FC = () => {
   const [WT, setWT] = useState("");
   const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+  const [Restaurant, setRestaurant] = useState("");
+  const [RestaurantG, setRestaurantG] = useState("");
 
   function getCurrGoals() {
     const task = "read_goals";
@@ -60,6 +62,8 @@ const Goals : React.FC = () => {
     setXPG(res.XPG);
     setHG(res.HG);
     setHD(res.HD);
+    setRestaurant("2");
+    setRestaurantG("10")
   }
 
   // need these set from the frontend when user chooses goal to update
@@ -90,6 +94,8 @@ const Goals : React.FC = () => {
           HD,
           user,
           task,
+          Restaurant,
+          RestaurantG,
         }
       )
       .then((res) => checkRes(res.data))

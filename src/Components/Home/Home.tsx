@@ -4,8 +4,10 @@ import PracticeCard from "./PracticeCard";
 const Home = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
-  const appPath = "/app?user=" + user;
+  const appPath = `/app?user=${user}`;
+  console.log(appPath);
   const goalPath = "/goals?user=" + user;
+  
 
   return (
     <>
@@ -14,7 +16,7 @@ const Home = () => {
         <div className="d-flex justify-content-center">
           <PracticeCard
             topic="Cuisine"
-            nextPath={appPath}
+            nextPath={`${appPath}&intent=cuisine`}
             progress={45}
             lastVisited="2 days ago"
           >

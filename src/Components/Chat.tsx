@@ -1,9 +1,9 @@
 import Definition from "./Definition";
-import { useState } from "react";
+import React, { useState } from "react";
 import "../Styles/Chat.css";
-import axios from "axios";
+import axios from 'axios';
 
-// let language = 'fr-FR';
+let language = 'fr-FR';
 
 interface chatProps {
   botChat: string[];
@@ -11,40 +11,33 @@ interface chatProps {
 }
 
 function Chat(chats: chatProps) {
-  const { VITE_REACT_APP_KEY } = import.meta.env;
+  const {VITE_REACT_APP_KEY} = import.meta.env;
 
   const getDefinition = async (word: string) => {
-    const options = {
-      method: "GET",
-      url: "https://translated-mymemory---translation-memory.p.rapidapi.com/get",
-      params: {
-        langpair: "fr|en",
-        q: `${word}`,
-        mt: "1",
-        onlyprivate: "0",
-      },
-      headers: {
-        "X-RapidAPI-Key": `${VITE_REACT_APP_KEY}`,
-        "X-RapidAPI-Host":
-          "translated-mymemory---translation-memory.p.rapidapi.com",
-      },
-    };
-    try {
-      const response = await axios.request(options);
-      setDefinition(response.data.matches[0].translation);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      const options = {
+          method: 'GET',
+          url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
+          params: {
+              langpair: 'fr|en',
+              q: `${word}`,
+              mt: '1',
+              onlyprivate: '0'
+          },
+          headers: {
+              'X-RapidAPI-Key': `${VITE_REACT_APP_KEY}`,
+              'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com'
+          }
+          };
+      try {
+          const response = await axios.request(options);
+          setDefinition(response.data.matches[0].translation);
+      } catch (error) {
+          console.error(error);
+      }
+  }
   const [showCard, setShowCard] = useState("");
   const [definition, setDefinition] = useState("");
-  const handleMouseUp = () => {
-    const selection = window.getSelection()?.toString();
-    if (selection) {
-      setShowCard(selection);
-      getDefinition(selection);
-    }
-  }
+
   const handleClick = (word: string) => {
     setShowCard(word);
     getDefinition(word);
@@ -57,7 +50,7 @@ function Chat(chats: chatProps) {
             <span key={wordIndex}>
               {wordIndex > 0 && " "}
               <span
-                onClick={() => handleMouseUp()}
+                onClick={() => handleClick(word)}
                 className="word"
                 title={word}
               >
@@ -68,9 +61,7 @@ function Chat(chats: chatProps) {
         </div>
       ))}
       <div className="position-fixed top-0 end-0">
-        {showCard != "" && (
-          <Definition word={showCard} trans={definition}></Definition>
-        )}
+        {showCard != "" && <Definition word={showCard} trans={definition}></Definition>}
       </div>
     </div>
   );
