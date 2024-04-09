@@ -5,9 +5,7 @@ import axios from "axios";
 const GoalSetup = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
-  console.log(user);
 
-  //const user = "1@gmail.com"
   // const [XPG, setXPG] = useState("");
   // const [XPD, setXPD] = useState("");
   const [WSG, setWSG] = useState("");
@@ -20,6 +18,18 @@ const GoalSetup = () => {
   const [WT, setWT] = useState("");
   // const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
 
   const task = "write_goals";
 

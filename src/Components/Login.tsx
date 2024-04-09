@@ -58,7 +58,7 @@ const Login = () => {
                   className="form-control"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 ></input>
@@ -78,8 +78,9 @@ const Login = () => {
                 ></input>
               </div>
               <div className="d-flex mt-2">
-                <button className="btn btn-primary">Login</button>
+              <button type="submit" className="btn btn-primary">Login</button>
               </div>
+              <a href={"/signup"}>Don't have an account</a>
               {loginFailed && (
                 <div
                   className="alert alert-danger alert-dismissible mt-2 "

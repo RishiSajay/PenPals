@@ -24,6 +24,18 @@ const Goals : React.FC = () => {
   const [Restaurant, setRestaurant] = useState("");
   const [RestaurantG, setRestaurantG] = useState("");
 
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
+
   function getCurrGoals() {
     const task = "read_goals";
     //event.preventDefault();

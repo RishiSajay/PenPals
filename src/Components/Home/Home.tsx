@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../../Styles/Home.css";
 import PracticeCard from "./PracticeCard";
 
@@ -9,6 +10,18 @@ const Home = () => {
   const goalPath = "/goals?user=" + user;
   
 
+  const [userVerified, setUserVerified] = useState(false);
+  const checkUserAuth = (user: any) => {
+    if (user == null || user == "null") {
+      window.location.href = "/";
+    }
+  };
+
+  if (!userVerified) {
+    checkUserAuth(user);
+    setUserVerified(true);
+  }
+
   return (
     <>
       <div className="container">
@@ -18,7 +31,7 @@ const Home = () => {
             topic="Cuisine"
             nextPath={`${appPath}&intent=cuisine`}
             progress={45}
-            lastVisited="2 days ago"
+            lastVisited="Keep up the great work!"
           >
             Learn how to ask about food recomendations, restaurant reviews, and
             more!
@@ -27,10 +40,18 @@ const Home = () => {
       </div>
 
       <div className="container">
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mt-3">
           <a href={goalPath} className="btn btn-primary">
             Adjust Goals
           </a>
+          <button
+            className="btn btn-primary ms-5"
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
+            Sign Out
+          </button>
         </div>
       </div>
     </>

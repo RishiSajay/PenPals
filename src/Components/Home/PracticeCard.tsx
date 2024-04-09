@@ -27,9 +27,7 @@ const PracticeCard = ({
             Practice!
           </a>
         </div>
-        <div className="card-footer text-muted">
-          {"Last visited " + lastVisited}
-        </div>
+        <div className="card-footer text-muted">{lastVisited}</div>
       </div>
     </>
   );

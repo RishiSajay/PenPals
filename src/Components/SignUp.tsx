@@ -11,12 +11,15 @@ const SignUp = () => {
   const [signUpFailed, setSignUpFailed] = useState(false);
 
   const task = "sign_up";
+  const [isVisible, setIsVisible] = useState(false)
 
   function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     if (password != password2) {
-      // tell them their passwords are different
-    } else {
+  // Function to toggle the visibility state
+        setIsVisible(true);
+    } 
+    else {
       axios
         // .get(
         //   "https://h550rgrgn0.execute-api.us-east-1.amazonaws.com/prod/resource" +
@@ -62,7 +65,7 @@ const SignUp = () => {
                   className="form-control"
                   id="email"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
+                  placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 ></input>
@@ -92,9 +95,13 @@ const SignUp = () => {
                   required
                 ></input>
               </div>
-              <div className="d-flex mt-2">
-                <button className="btn btn-primary">Sign Up</button>
+              <small id="pass" className="form-text text-danger">
+              {isVisible ? "Passwords do not match" : ""}
+                </small>
+                <div className="d-flex mt-2">
+              <button type="submit" className="btn btn-primary">Sign Up</button>
               </div>
+              <a href={"/login"}>Already have an account</a>
               {signUpFailed && (
                 <div
                   className="alert alert-danger alert-dismissible mt-2"
