@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Goals = () => {
+const Goals : React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
   //console.log(user);
@@ -21,6 +21,8 @@ const Goals = () => {
   const [WT, setWT] = useState("");
   const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+  const [Restaurant, setRestaurant] = useState("");
+  const [RestaurantG, setRestaurantG] = useState("");
 
   const [userVerified, setUserVerified] = useState(false);
   const checkUserAuth = (user: any) => {
@@ -72,6 +74,8 @@ const Goals = () => {
     setXPG(res.XPG);
     setHG(res.HG);
     setHD(res.HD);
+    setRestaurant("2");
+    setRestaurantG("10")
   }
 
   // need these set from the frontend when user chooses goal to update
@@ -102,6 +106,8 @@ const Goals = () => {
           HD,
           user,
           task,
+          Restaurant,
+          RestaurantG,
         }
       )
       .then((res) => checkRes(res.data))
