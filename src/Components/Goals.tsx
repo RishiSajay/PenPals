@@ -21,8 +21,11 @@ const Goals : React.FC = () => {
   const [WT, setWT] = useState("");
   const [XP, setXP] = useState("");
   const [H, setH] = useState("");
-  const [Restaurant, setRestaurant] = useState("");
-  const [RestaurantG, setRestaurantG] = useState("");
+  const [Restaurant, setRestaurant] = useState("0");
+  const [Beverages, setBeverages] = useState("0");
+  const [Social, setSocial] = useState("0");
+  const [Food, setFood] = useState("0");
+  const [Paying, setPaying] = useState("0");
 
   const [userVerified, setUserVerified] = useState(false);
   const checkUserAuth = (user: any) => {
@@ -58,6 +61,11 @@ const Goals : React.FC = () => {
       setWT(res.WT);
       setXP(res.XP);
       setH(res.H);
+      setRestaurant(res.Restaurant);
+      setBeverages(res.Beverages);
+      setFood(res.Food);
+      setSocial(res.Social);
+      setPaying(res.Paying);
     } catch {
       // default values that weren't initially set
       console.log("defaulting progress");
@@ -65,17 +73,22 @@ const Goals : React.FC = () => {
       setWT("0");
       setXP("0");
       setH("0");
+      setRestaurant("0");
+      setFood("0");
+      setBeverages("0");
+      setSocial("0");
+      setPaying("0");
     }
-    setWSG(res.WSG);
-    setWSD(res.WSD);
-    setWTD(res.WTD);
-    setWTG(res.WTG);
-    setXPD(res.XPD);
-    setXPG(res.XPG);
-    setHG(res.HG);
-    setHD(res.HD);
-    setRestaurant("2");
-    setRestaurantG("10")
+    // setWSG(res.WSG);
+    // setWSD(res.WSD);
+    // setWTD(res.WTD);
+    // setWTG(res.WTG);
+    // setXPD(res.XPD);
+    // setXPG(res.XPG);
+    // setHG(res.HG);
+    // setHD(res.HD);
+    // setRestaurant("2");
+    // setRestaurantG("10")
   }
 
   // need these set from the frontend when user chooses goal to update
@@ -104,10 +117,13 @@ const Goals : React.FC = () => {
           H,
           HG,
           HD,
+          Restaurant,
+          Beverages,
+          Food,
+          Paying,
+          Social,
           user,
           task,
-          Restaurant,
-          RestaurantG,
         }
       )
       .then((res) => checkRes(res.data))

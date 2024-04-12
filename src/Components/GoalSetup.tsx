@@ -18,6 +18,11 @@ const GoalSetup = () => {
   const [WT, setWT] = useState("");
   // const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+  const [Restaurant, setRestaurant] = useState("0");
+  const [Beverages, setBeverages] = useState("0");
+  const [Social, setSocial] = useState("0");
+  const [Food, setFood] = useState("0");
+  const [Paying, setPaying] = useState("0");
 
   const [userVerified, setUserVerified] = useState(false);
   const checkUserAuth = (user: any) => {
@@ -67,6 +72,11 @@ const GoalSetup = () => {
           H,
           HG,
           HD,
+          Restaurant,
+          Beverages,
+          Food,
+          Paying,
+          Social,
           user,
           task,
         }
