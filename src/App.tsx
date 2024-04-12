@@ -362,16 +362,19 @@ function App() {
   const [WSG, setWSG] = useState(0);
   const [WTG, setWTG] = useState(0);
   const [HG, setHG] = useState(0);
-  const [Social, setSocial] = useState(0);
-  const [SocialG, setSocialG] = useState(3);
-  const [Restaurant, setRestaurant] = useState(0);
-  const [RestaurantG, setRestaurantG] = useState(96);
-  const [Food, setFood] = useState(0);
-  const [FoodG, setFoodG] = useState(92);
-  const [Beverages, setBeverages] = useState(0);
-  const [BeveragesG, setBeveragesG] = useState(48);
-  const [Paying, setPaying] = useState(0);
-  const [PayingG, setPayingG] = useState(8);
+  const [SocialS, setSocial] = useState(0);
+  const [RestaurantS, setRestaurant] = useState(0);
+  const [FoodS, setFood] = useState(0);
+  const [BeveragesS, setBeverages] = useState(0);
+  const [PayingS, setPaying] = useState(0);
+
+  //Cuisine Scenario
+  const RestaurantG = 96;
+  const FoodG = 92;
+  const BeveragesG = 48;
+  const PayingG = 8;
+  const SocialG = 3;
+
 
   const [userVerified, setUserVerified] = useState(false);
   const checkUserAuth = (user: any) => {
@@ -388,6 +391,7 @@ function App() {
   const { VITE_REACT_APP_KEY } = import.meta.env;
   function getCurrentGoals() {
     const task = "read_goals";
+    console.log("i'm being called");
     axios
       .post(
         "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
@@ -402,16 +406,16 @@ function App() {
           setWordsH(Number(res.data.result["H"])),
           setWSG(Number(res.data.result["WSG"])),
           setWTG(Number(res.data.result["WTG"])),
-          setHG(Number(res.data.result["HG"]));
-          //setRestaurant(Number(res.data.result["Restaurant"])),
+          setHG(Number(res.data.result["HG"])),
+          setRestaurant(Number(res.data.result["Restaurant"])),
           //setRestaurantG(Number(res.data.result["RestaurantG"])),
-          //setBeverages(Number(res.data.result["Beverages"])),
+          setBeverages(Number(res.data.result["Beverages"])),
           //setBeveragesG(Number(res.data.result["BeveragesG"])),
-          //setFood(Number(res.data.result["Food"])),
+          setFood(Number(res.data.result["Food"])),
           //setFoodG(Number(res.data.result["FoodG"])),
-          //setSocial(Number(res.data.result["Social"])),
+          setSocial(Number(res.data.result["Social"])),
           //setSocialG(Number(res.data.result["SocialG"])),
-          //setPaying(Number(res.data.result["Paying"])),
+          setPaying(Number(res.data.result["Paying"]));
           //setPayingG(Number(res.data.result["PayingG"]));
       })
       .catch((err) => console.log(err));
@@ -451,34 +455,34 @@ function App() {
   }
 
   function updateRestaurantLocal(words: number) {
-    setRestaurant((Restaurant) => Restaurant + words);
+    setRestaurant((RestaurantS) => RestaurantS + words);
   }
 
   function updateBeveragesLocal(words: number) {
-    setBeverages((Beverages) => Beverages + words);
+    setBeverages((BeveragesS) => BeveragesS + words);
   }
 
   function updateFoodLocal(words: number) {
-    setFood((Food) => Food + words);
+    setFood((FoodS) => FoodS + words);
   }
 
   function updatePayingLocal(words: number) {
-    setPaying((Paying) => Paying + words);
+    setPaying((PayingS) => PayingS + words);
   }
 
   function updateSocialLocal(words: number) {
-    setSocial((Social) => Social + words);
+    setSocial((SocialS) => SocialS + words);
   }
 
   function updateGoalsGlobal(nextPath: string) {
     const WT = wordsT.toString();
     const WS = wordsS.toString();
     const H = wordsH.toString();
-    const R = Restaurant.toString();
-    const B = Beverages.toString();
-    const P = Paying.toString();
-    const S = Social.toString();
-    const F = Food.toString();
+    const Restaurant = RestaurantS.toString();
+    const Beverages = BeveragesS.toString();
+    const Paying = PayingS.toString();
+    const Social = SocialS.toString();
+    const Food = FoodS.toString();
 
 
     const task = "write_goals";
@@ -489,11 +493,11 @@ function App() {
           WT,
           WS,
           H,
-          R,
-          B,
-          P,
-          S,
-          F,
+          Restaurant,
+          Beverages,
+          Paying,
+          Social,
+          Food,
           user,
           task,
         }
@@ -749,15 +753,15 @@ function App() {
         <div className="card w-25 mt-5 border border-dark rounded">
           <div className="card-body">
             <h3 className="text-center">Goals</h3>
-            <ProgressBar variant="info" now={Restaurant} max={RestaurantG} />
+            <ProgressBar id="RestaurantProgress" variant="info" now={RestaurantS} max={RestaurantG} />
             Restaurant
-            <ProgressBar variant="info" now={Beverages} max={BeveragesG} />
+            <ProgressBar variant="info" now={BeveragesS} max={BeveragesG} />
             Beverages
-            <ProgressBar variant="info" now={Paying} max={PayingG} />
+            <ProgressBar variant="info" now={PayingS} max={PayingG} />
             Paying
-            <ProgressBar variant="info" now={Food} max={FoodG} />
+            <ProgressBar variant="info" now={FoodS} max={FoodG} />
             Food
-            <ProgressBar variant="info" now={Social} max={SocialG} />
+            <ProgressBar variant="info" now={SocialS} max={SocialG} />
             Social
           </div>
           <div className="container">
