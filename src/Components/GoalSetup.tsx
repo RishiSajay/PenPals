@@ -6,18 +6,11 @@ const GoalSetup = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
 
-  // const [XPG, setXPG] = useState("");
-  // const [XPD, setXPD] = useState("");
-  const [WSG, setWSG] = useState("");
-  const [WSD, setWSD] = useState("");
-  const [WTG, setWTG] = useState("");
-  const [WTD, setWTD] = useState("");
-  const [HG, setHG] = useState("");
-  const [HD, setHD] = useState("");
   const [WS, setWS] = useState("");
   const [WT, setWT] = useState("");
-  // const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+  const [CuisineG, setCG] = useState("0");
+  const [CuisineD, setCD] = useState("0");
   const [Restaurant, setRestaurant] = useState("0");
   const [Beverages, setBeverages] = useState("0");
   const [Social, setSocial] = useState("0");
@@ -60,18 +53,11 @@ const GoalSetup = () => {
       .post(
         "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
         {
-          // XP,
-          // XPG,
-          // XPD,
           WS,
-          WSG,
-          WSD,
           WT,
-          WTG,
-          WTD,
           H,
-          HG,
-          HD,
+          CuisineG,
+          CuisineD,
           Restaurant,
           Beverages,
           Food,
@@ -101,76 +87,25 @@ const GoalSetup = () => {
           <div className="card card w-25 mt-5 border border-primary rounded">
             {" "}
             <div className="card-body">
-              {/* <div className="form-group">
-                <label htmlFor="XP">XP Goal</label>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="XP"
-                  placeholder="enter your XP goal"
-                  onChange={(e) => setXPG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="XP date"
-                  placeholder="enter a date to achieve your XP goal by"
-                  onChange={(e) => setXPD(e.target.value)}
-                ></input>
-              </div> */}
               <div className="form-group mt-2">
-                <label htmlFor="WS">Words Spoken Goal</label>
+                <label htmlFor="WS">Cuisine Goal</label>
                 <input
                   type="int"
                   className="form-control"
                   id="WS"
-                  placeholder="enter your words spoken goal"
-                  onChange={(e) => setWSG(e.target.value)}
+                  placeholder="enter your percentage goal"
+                  onChange={(e) => setCG(e.target.value)}
                 ></input>
                 <input
                   type="date"
                   className="form-control"
                   id="WS date"
-                  placeholder="enter a date to achieve your words spoken goal by"
-                  onChange={(e) => setWSD(e.target.value)}
-                ></input>
-              </div>
-              <div className="form-group mt-3">
-                <label htmlFor="WT">Words Typed Goal</label>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="WT"
-                  placeholder="enter your words typed goal"
-                  onChange={(e) => setWTG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="WT date"
-                  placeholder="enter a date to achieve your words typed goal by"
-                  onChange={(e) => setWTD(e.target.value)}
-                ></input>
-              </div>
-              <div className="form-group mt-4">
-                <label htmlFor="H">Highlighting Goal</label>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="H"
-                  placeholder="enter your highlighting goal"
-                  onChange={(e) => setHG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="H date"
-                  placeholder="enter a date to achieve your highlighting goal by"
-                  onChange={(e) => setHD(e.target.value)}
+                  placeholder="enter a date to achieve your percentage goal by"
+                  onChange={(e) => setCD(e.target.value)}
                 ></input>
               </div>
               <div className="d-flex mt-2">
-                <button>Submit</button>
+              <button type="submit" className="btn btn-primary">Submit</button>
               </div>
             </div>
           </div>
