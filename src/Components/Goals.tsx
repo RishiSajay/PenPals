@@ -2,6 +2,7 @@ import { ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { before } from "node:test";
 
 const Goals : React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -9,18 +10,11 @@ const Goals : React.FC = () => {
   //console.log(user);
 
   //const user = "1@gmail.com" // hardcoding
-  const [XPG, setXPG] = useState("");
-  const [XPD, setXPD] = useState("");
-  const [WSG, setWSG] = useState("");
-  const [WSD, setWSD] = useState("");
-  const [WTG, setWTG] = useState("");
-  const [WTD, setWTD] = useState("");
-  const [HG, setHG] = useState("");
-  const [HD, setHD] = useState("");
   const [WS, setWS] = useState("");
   const [WT, setWT] = useState("");
-  const [XP, setXP] = useState("");
   const [H, setH] = useState("");
+  const [CuisineG, setCG] = useState("0");
+  const [CuisineD, setCD] = useState("0");
   const [Restaurant, setRestaurant] = useState("0");
   const [Beverages, setBeverages] = useState("0");
   const [Social, setSocial] = useState("0");
@@ -59,8 +53,9 @@ const Goals : React.FC = () => {
     try {
       setWS(res.WS);
       setWT(res.WT);
-      setXP(res.XP);
       setH(res.H);
+      setCD(res.CuisineD);
+      setCG(res.CuisineG);
       setRestaurant(res.Restaurant);
       setBeverages(res.Beverages);
       setFood(res.Food);
@@ -71,7 +66,6 @@ const Goals : React.FC = () => {
       console.log("defaulting progress");
       setWS("0");
       setWT("0");
-      setXP("0");
       setH("0");
       setRestaurant("0");
       setFood("0");
@@ -105,18 +99,11 @@ const Goals : React.FC = () => {
       .post(
         "https://qeetqm5h08.execute-api.us-east-1.amazonaws.com/prod/resource",
         {
-          XP,
-          XPG,
-          XPD,
           WS,
-          WSG,
-          WSD,
           WT,
-          WTG,
-          WTD,
           H,
-          HG,
-          HD,
+          CuisineG,
+          CuisineD,
           Restaurant,
           Beverages,
           Food,
@@ -146,101 +133,32 @@ const Goals : React.FC = () => {
           <div className="card card w-25 mt-5 border border-primary rounded">
             {" "}
             <div className="card-body">
-              {/* <div className="form-group">
-                <label htmlFor="XP">XP Goal</label>
-                <ProgressBar variant="info" now={Number(XP)} max={Number(XPG)}></ProgressBar>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="XP"
-                  placeholder="enter your XP goal"
-                  value={XPG}
-                  onChange={(e) => setXPG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="XP date"
-                  placeholder="enter a date to achieve your XP goal by"
-                  value={XPD}
-                  onChange={(e) => setXPD(e.target.value)}
-                ></input>
-              </div> */}
               <div className="form-group mt-2">
-                <label htmlFor="WS">Words Spoken Goal</label>
+                <label htmlFor="CG">Cuisine Goal</label>
                 <ProgressBar
                   variant="info"
-                  now={Number(WS)}
-                  max={Number(WSG)}
+                  now={Number(Restaurant)+Number(Beverages)+Number(Food)+Number(Paying)+Number(Paying)}
+                  max={247} // total phrases
                 ></ProgressBar>
+                {Number(Restaurant)+Number(Beverages)+Number(Food)+Number(Paying)+Number(Paying)}%
                 <input
                   type="int"
                   className="form-control"
-                  id="WS"
-                  placeholder="enter your words spoken goal"
-                  value={WSG}
-                  onChange={(e) => setWSG(e.target.value)}
+                  id="CG"
+                  placeholder="enter your percentage goal"
+                  value={CuisineG}
+                  onChange={(e) => setCG(e.target.value)}
                 ></input>
                 <input
                   type="date"
                   className="form-control"
-                  id="WS date"
-                  placeholder="enter a date to achieve your words spoken goal by"
-                  value={WSD}
-                  onChange={(e) => setWSD(e.target.value)}
+                  id="CGD"
+                  placeholder="enter a date to achieve your percentage goal by"
+                  value={CuisineD}
+                  onChange={(e) => setCD(e.target.value)}
                 ></input>
               </div>
-              <div className="form-group mt-3">
-                <label htmlFor="WT">Words Typed Goal</label>
-                <ProgressBar
-                  variant="info"
-                  now={Number(WT)}
-                  max={Number(WTG)}
-                ></ProgressBar>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="WT"
-                  placeholder="enter your words typed goal"
-                  value={WTG}
-                  onChange={(e) => setWTG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="WT date"
-                  placeholder="enter a date to achieve your words typed goal by"
-                  value={WTD}
-                  onChange={(e) => setWTD(e.target.value)}
-                ></input>
-              </div>
-              <div className="form-group mt-4">
-                <label htmlFor="H">Highlighting Goal</label>
-                <ProgressBar
-                  variant="info"
-                  now={Number(H)}
-                  max={Number(HG)}
-                ></ProgressBar>
-                <input
-                  type="int"
-                  className="form-control"
-                  id="H"
-                  placeholder="enter your highlighting goal"
-                  value={HG}
-                  onChange={(e) => setHG(e.target.value)}
-                ></input>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="H date"
-                  placeholder="enter a date to achieve your highlighting goal by"
-                  value={HD}
-                  onChange={(e) => setHD(e.target.value)}
-                ></input>
-              </div>
-              <div className="d-flex mt-2">
-                <button>Submit</button>
-              </div>
+              <button type="submit" className="btn btn-primary">Submit</button>
             </div>
           </div>
         </div>
