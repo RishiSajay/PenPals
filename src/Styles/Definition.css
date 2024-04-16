@@ -1,0 +1,19 @@
+.overflow-text {
+    max-height: 100%; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Add vertical scrolling when content overflows */
+    flex-shrink: 0; /* Prevent text from shrinking */
+    max-width: 100%;
+  }
+
+.container {
+    max-width: 20vw; /* Set maximum width to 90% of the viewport width */
+  overflow: hidden;
+  padding: 10px;
+  cursor: pointer;
+}
+.definition {
+    max-width: 500px;
+    max-height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+}
