@@ -1,9 +1,7 @@
 import Definition from "./Definition";
-import React, { useState } from "react";
+import { useState } from "react";
 import "../Styles/Chat.css";
 import axios from 'axios';
-
-let language = 'fr-FR';
 
 interface chatProps {
   botChat: string[];

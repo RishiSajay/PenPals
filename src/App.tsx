@@ -6,8 +6,6 @@ import EmmaStatic from "./assets/Emma Static.png";
 import axios from "axios";
 import Definition from "./Components/Definition";
 import { ProgressBar } from "react-bootstrap";
-import { SessionsClient } from '@google-cloud/dialogflow';
-import dialogflow from '@google-cloud/dialogflow';
 
 import OpenAI from "openai";
 
@@ -359,9 +357,6 @@ function App() {
   const [wordsT, setWordsT] = useState(0);
   const [wordsS, setWordsS] = useState(0);
   const [wordsH, setWordsH] = useState(0);
-  const [WSG, setWSG] = useState(0);
-  const [WTG, setWTG] = useState(0);
-  const [HG, setHG] = useState(0);
   const [SocialS, setSocial] = useState(0);
   const [RestaurantS, setRestaurant] = useState(0);
   const [FoodS, setFood] = useState(0);
@@ -404,9 +399,6 @@ function App() {
         setWordsS(Number(res.data.result["WS"])),
           setWordsT(Number(res.data.result["WT"])),
           setWordsH(Number(res.data.result["H"])),
-          setWSG(Number(res.data.result["WSG"])),
-          setWTG(Number(res.data.result["WTG"])),
-          setHG(Number(res.data.result["HG"])),
           setRestaurant(Number(res.data.result["Restaurant"])),
           //setRestaurantG(Number(res.data.result["RestaurantG"])),
           setBeverages(Number(res.data.result["Beverages"])),

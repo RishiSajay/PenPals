@@ -38,6 +38,11 @@ const GoalSetup = () => {
     setWT("0");
     // setXP("0");
     setH("0");
+    setBeverages("0");
+    setPaying("0");
+    setFood("0");
+    setRestaurant("0");
+    setSocial("0");
     axios
       // .post("http://localhost:3000/goalsetup", {
       //   XPG,

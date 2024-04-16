@@ -2,7 +2,6 @@ import { ProgressBar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { before } from "node:test";
 
 const Goals : React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
