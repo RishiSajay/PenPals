@@ -107,6 +107,7 @@ const GoalSetup = () => {
                 <small id="percent" className="form-text text-danger">
                 {isVisible ? "Not a valid percentage value" : ""}
                 </small>
+                <small>enter a date to achieve your percentage goal by</small>
                 <input
                   type="date"
                   className="form-control"
