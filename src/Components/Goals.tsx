@@ -9,6 +9,8 @@ const Goals : React.FC = () => {
   const user = urlParams.get("user");
   //console.log(user);
 
+  const [isVisible, setIsVisible] = useState(false)
+
   //const user = "1@gmail.com" // hardcoding
   const [WS, setWS] = useState("");
   const [WT, setWT] = useState("");
@@ -145,20 +147,26 @@ const Goals : React.FC = () => {
                   type="int"
                   className="form-control"
                   id="CG"
-                  placeholder="enter your percentage goal"
-                  value={CuisineG}
-                  onChange={(e) => setCG(e.target.value)}
+                  placeholder={"current goal: " + CuisineG}
+                  //value={CuisineG}
+                  onChange={(e) => {if(Number(e.target.value) > 0 && Number(e.target.value) <= 100){setCG(e.target.value), setIsVisible(false)}else{setIsVisible(true)}}}
+                  //onChange={(e) => setCG(e.target.value)}
                 ></input>
+                <small id="percent" className="form-text text-danger">
+                {isVisible ? "Not a valid percentage value" : ""}
+                </small>
                 <input
                   type="date"
                   className="form-control"
                   id="CGD"
-                  placeholder="enter a date to achieve your percentage goal by"
                   value={CuisineD}
                   onChange={(e) => setCD(e.target.value)}
                 ></input>
               </div>
               <button type="submit" className="btn btn-primary">Submit</button>
+              <a className="btn btn-primary mx-3" href={"/home?user=" + user}>
+                Cancel
+              </a>
             </div>
           </div>
         </div>
