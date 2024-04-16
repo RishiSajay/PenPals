@@ -6,6 +6,8 @@ const GoalSetup = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
 
+  const [isVisible, setIsVisible] = useState(false)
+
   const [WS, setWS] = useState("");
   const [WT, setWT] = useState("");
   const [H, setH] = useState("");
@@ -99,8 +101,12 @@ const GoalSetup = () => {
                   className="form-control"
                   id="WS"
                   placeholder="enter your percentage goal"
-                  onChange={(e) => setCG(e.target.value)}
+                  onChange={(e) => {if(Number(e.target.value) > 0 && Number(e.target.value) <= 100){setCG(e.target.value), setIsVisible(false)}else{setIsVisible(true)}}}
+                  //onChange={(e) => {console.log(e.target.value)}}
                 ></input>
+                <small id="percent" className="form-text text-danger">
+                {isVisible ? "Not a valid percentage value" : ""}
+                </small>
                 <input
                   type="date"
                   className="form-control"
@@ -111,6 +117,9 @@ const GoalSetup = () => {
               </div>
               <div className="d-flex mt-2">
               <button type="submit" className="btn btn-primary">Submit</button>
+              <a className="btn btn-primary mx-3" href={"/home?user=" + user}>
+                Cancel
+              </a>
               </div>
             </div>
           </div>
