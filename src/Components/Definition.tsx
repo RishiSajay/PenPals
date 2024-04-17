@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Modal from 'react-bootstrap/Modal';
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
 import "../Styles/Definition.css";
 
 interface DefinitionProps {
@@ -22,13 +21,10 @@ function Definition(props: DefinitionProps) {
           <h5 className="card-title user-select-none overflow-hidden">
             {props.word}
           </h5>
-          <p className="card-text user-select-none">
-            {props.trans}
-          </p>
-          
+          <p className="card-text user-select-none">{props.trans}</p>
         </div>
       </div>
-      
+
       <Modal show={modalOpen} onHide={toggleModal}>
         <Modal.Header closeButton>
           <Modal.Title>{`${props.word}`}</Modal.Title>
