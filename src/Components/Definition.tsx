@@ -16,7 +16,7 @@ function Definition(props: DefinitionProps) {
 
   return (
     <div className="overflow-hidden " onClick={toggleModal}>
-      <div className="card definition mt-5 border-dark rounded">
+      <div className="card definition border-dark rounded">
         <div className="card-body">
           <h5 className="card-title user-select-none overflow-hidden">
             {props.word}
