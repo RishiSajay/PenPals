@@ -94,7 +94,7 @@ const Home = () => {
         <div className="row d-flex justify-content-center mb-5">
           <PracticeCard
                 topic="Travel"
-                nextPath={`${appPath}&intent=cuisine`}
+                nextPath={`${appPath}&intent=travel`}
                 progress={0}
                 lastVisited="Keep up the great work!"
               >
@@ -104,7 +104,7 @@ const Home = () => {
         <div className="row d-flex justify-content-center mb-5">
         <PracticeCard
               topic="Groceries"
-              nextPath={`${appPath}&intent=cuisine`}
+              nextPath={`${appPath}&intent=groceries`}
               progress={0}
               lastVisited="Keep up the great work!"
             >
