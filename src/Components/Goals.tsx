@@ -162,6 +162,7 @@ const Goals : React.FC = () => {
                   onChange={(e) => setCD(e.target.value)}
                 ></input>
               </div>
+              
               <button type="submit" className="btn btn-primary">Submit</button>
               <a className="btn btn-primary mx-3" href={"/home?user=" + user}>
                 Cancel
